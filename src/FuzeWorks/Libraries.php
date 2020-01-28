@@ -97,7 +97,7 @@ class Libraries
      */
     public function addLibraryClass(string $libraryName, string $libraryClass)
     {
-        if (!class_exists($libraryClass, false))
+        if (!class_exists($libraryClass, true))
             throw new LibraryException("Could not add library class. '" . $libraryClass . "' could not be loaded.", 1);
 
         $this->libraryClasses[strtolower($libraryName)] = $libraryClass;
