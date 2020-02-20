@@ -347,17 +347,18 @@ class Configurator
         // Then prepare the debugger
         $debug = ($this->parameters['debugEnabled'] && $this->parameters['debugMatch'] ? true : false);
 
-        // Then load the framework
-        $container = Core::init();
-        Logger::newLevel("Creating container...");
+        // Define environment constants
         if ($debug == true)
-        {
             define('ENVIRONMENT', 'DEVELOPMENT');
-            Logger::enable();
-        }
         else
             define('ENVIRONMENT', 'PRODUCTION');
 
+        // Load the Framework
+        $container = Core::init();
+        if ($debug)
+            Logger::enable();
+
+        Logger::newLevel("Creating container...");
 
         // Load components
         foreach ($this->components as $componentSuperClass => $component)
@@ -381,6 +382,21 @@ class Configurator
             $component->onCreateContainer($container);
         }
 
+        // Add directories to Components
+        foreach ($this->directories as $component => $priorityArray)
+        {
+            Logger::logDebug("Adding directories for '" . $component . "'");
+            if (method_exists($container->{$component}, 'setDirectories'))
+                $container->{$component}->setDirectories($priorityArray);
+        }
+
+        // Initialize all components
+        foreach ($container as $component)
+        {
+            if (method_exists($component, 'init'))
+                $component->init();
+        }
+
         // Invoke deferredComponentClass on FuzeWorks\Core classes
         foreach ($this->deferredComponentClassMethods as $componentClass => $deferredComponentClasses)
         {
@@ -396,14 +412,6 @@ class Configurator
                     ));
                 }
             }
-        }
-
-        // Add directories to Components
-        foreach ($this->directories as $component => $priorityArray)
-        {
-            Logger::logDebug("Adding directories for '" . $component . "'");
-            if (method_exists($container->{$component}, 'setDirectories'))
-                $container->{$component}->setDirectories($priorityArray);
         }
 
         $container->initFactory();

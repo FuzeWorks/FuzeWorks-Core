@@ -1,0 +1,27 @@
+FuzeWorks boot process
+
+1.
+	1.1 Temp/Log directory set
+	1.2 Debug parameters set
+2.
+	2.1 Define ENVIRONMENT
+	2.2 Core::init()
+		2.2.1 CWD Set
+		2.2.2 CoreDir set
+		2.2.3 Constants defined
+		2.2.4 shutdown/error/exception handlers set
+	2.3 new Factory()
+		2.3.1 new Config, Logger, Events, Libraries, Helpers, Plugins
+3.
+	3.1 Load Components
+		3.1.1 setInstance of component
+		3.1.2 run onCreateContainer()
+	3.2 Add directories by category
+	3.3 each component init()
+	3.4 deferComponentClass invoke
+4.
+	4.1 Factory::initFactory()
+		4.1.1 enable/disable Events
+		4.1.2 Plugins::loadHeadersFromPluginPaths()
+		4.1.3 coreStartEvent()
+5. Return container
