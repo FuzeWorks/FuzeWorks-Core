@@ -170,6 +170,13 @@ class Factory
         if (!$cfg->get('enable_events'))
             Events::disable();
 
+        // Initialize all components
+        foreach ($this as $component)
+        {
+            if (method_exists($component, 'init'))
+                $component->init();
+        }
+
         // Initialize all plugins
         $this->plugins->loadHeadersFromPluginPaths();
 

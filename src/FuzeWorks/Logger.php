@@ -533,22 +533,35 @@ class Logger {
     public static function getType($type): string
     {
         switch ($type) {
-            case E_PARSE:
-            case E_CORE_ERROR:
-            case E_COMPILE_ERROR:
-            case E_USER_ERROR:
-            case E_STRICT:
-            case E_RECOVERABLE_ERROR:
             case E_ERROR:
                 return 'ERROR';
-            case E_NOTICE:
-            case E_CORE_WARNING:
-            case E_COMPILE_WARNING:
-            case E_USER_WARNING:
-            case E_USER_NOTICE:
-            case E_USER_DEPRECATED:
-            case E_DEPRECATED:
             case E_WARNING:
+                return 'WARNING';
+            case E_PARSE:
+                return 'ERROR';
+            case E_NOTICE:
+                return 'WARNING';
+            case E_CORE_ERROR:
+                return 'ERROR';
+            case E_CORE_WARNING:
+                return 'WARNING';
+            case E_COMPILE_ERROR:
+                return 'ERROR';
+            case E_COMPILE_WARNING:
+                return 'WARNING';
+            case E_USER_ERROR:
+                return 'ERROR';
+            case E_USER_WARNING:
+                return 'WARNING';
+            case E_USER_NOTICE:
+                return 'WARNING';
+            case E_USER_DEPRECATED:
+                return 'WARNING';
+            case E_STRICT:
+                return 'ERROR';
+            case E_RECOVERABLE_ERROR:
+                return 'ERROR';
+            case E_DEPRECATED:
                 return 'WARNING';
         }
 
