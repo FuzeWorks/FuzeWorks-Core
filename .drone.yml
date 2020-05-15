@@ -1,0 +1,19 @@
+kind: pipeline
+type: docker
+name: test
+
+steps:
+  - name: composer
+    image: composer:latest
+    commands:
+      - composer install
+
+  - name: phpunit
+    image: phpunit:7.3
+    commands:
+      - vendor/bin/phpunit -c test/phpunit.xml
+
+  - name: coverage
+    image: phpunit:7.3
+    commands:
+      - vendor/bin/phpunit -c test/phpunit.xml --coverage-text

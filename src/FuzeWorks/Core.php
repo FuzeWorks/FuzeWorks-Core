@@ -149,6 +149,26 @@ class Core
     }
 
     /**
+     * Retrieve a variable name from the php environment, while also providing a fallback variable
+     *
+     * @param string $varName
+     * @param string|null $default
+     * @return mixed
+     */
+    public static function getEnv(string $varName, string $default = null)
+    {
+        // First retrieve the environment variable
+        $var = getenv($varName);
+
+        // If the environment variable doesn't exist, use the default one
+        if ($var === FALSE)
+            return $default;
+
+        // Otherwise return the variable itself
+        return $var;
+    }
+
+    /**
      * Checks whether the current running version of PHP is equal to the input string.
      *
      * @param   string

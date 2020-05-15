@@ -71,5 +71,21 @@ class coreTest extends CoreTestAbstract
     {
         $this->assertTrue(Core::isPHP('1.2.0'));
         $this->assertFalse(Core::isphp('9999.9.9'));
-    } 
+    }
+
+    /**
+     * @covers ::getEnv
+     */
+    public function testGetEnv()
+    {
+        // First push some test variables
+        putenv('TESTGETENV=AFFIRMED');
+
+        // Then try and fetch using the method
+        $this->assertEquals('AFFIRMED', Core::getEnv('TESTGETENV'));
+
+        // Also test variables that don't exist
+        $this->assertNull(Core::getEnv('TESTNOTEXIST'));
+        $this->assertEquals('replacement', Core::getEnv('TESTNOTEXISTTWO', 'replacement'));
+    }
 }
