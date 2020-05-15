@@ -88,6 +88,10 @@ class ConfigORM extends ConfigORMAbstract
      */
     public function commit(): bool
     {
+        // If config has a lock file, don't write
+        if (isset($this->cfg['lock']))
+            throw new ConfigException("Could not write config file. $this->file is locked with the 'lock' key.");
+
     	// Write the changes
         if (is_writable($this->file)) {
             $config = var_export($this->cfg, true);

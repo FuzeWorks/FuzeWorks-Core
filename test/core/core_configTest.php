@@ -190,4 +190,20 @@ class configTest extends CoreTestAbstract
         $this->assertEquals($config2->key, 'other_value');
     }
 
+    /**
+     * @coversNothing
+     */
+    public function testConfigWithEnvironmentVariables()
+    {
+        // First push the test variable
+        putenv('TESTKEY=Superb');
+
+        // Load the config
+        $config = $this->config->getConfig('testconfigwithenvironment', ['test'.DS.'config'.DS.'TestConfigWithEnvironment']);
+
+        // Check values
+        $this->assertEquals('Superb', $config->get('testKey'));
+        $this->assertEquals('somethingDefault', $config->get('otherKey'));
+    }
+
 }
