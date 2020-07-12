@@ -224,16 +224,16 @@ class Events
                 //Check for listeners in this priority
                 if (isset(self::$listeners[$eventName][$priority])) {
                     $listeners = self::$listeners[$eventName][$priority];
-                    Logger::newLevel('Found listeners with priority '.Priority::getPriority($priority));
+                    Logger::newLevel('Listeners with priority '.Priority::getPriority($priority));
                     //Fire the event to each listener
                     foreach ($listeners as $callbackArray) {
                         // @codeCoverageIgnoreStart
                         $callback = $callbackArray[0];
-                        if (is_callable($callback)) {
-                            Logger::newLevel('Firing function');
-                        } elseif (!is_string($callback[0])) {
+                        if (is_array($callback)) {
                             Logger::newLevel('Firing '.get_class($callback[0]).'->'.$callback[1]);
-                        } else {
+                        }  elseif (is_callable($callback)) {
+                            Logger::newLevel('Firing function');
+                        }  else {
                             Logger::newLevel('Firing '.implode('->', $callback));
                         }
                         // @codeCoverageIgnoreEnd
