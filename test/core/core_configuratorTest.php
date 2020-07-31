@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Configurator;
 use FuzeWorks\Core;
+use FuzeWorks\Exception\ConfiguratorException;
 use FuzeWorks\Factory;
 use FuzeWorks\iComponent;
 use FuzeWorks\Logger;
@@ -54,7 +55,7 @@ class configuratorTest extends CoreTestAbstract
      */
     protected $configurator;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->configurator = new Configurator;
         $this->configurator->setTempDirectory(dirname(__DIR__) . '/temp');
@@ -62,7 +63,7 @@ class configuratorTest extends CoreTestAbstract
         $this->configurator->setTimeZone('Europe/Amsterdam');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
@@ -132,7 +133,6 @@ class configuratorTest extends CoreTestAbstract
      * @depends testAddComponent
      * @covers ::addComponent
      * @covers ::createContainer
-     * @expectedException FuzeWorks\Exception\ConfiguratorException
      */
     public function testAddComponentFail()
     {
@@ -142,6 +142,7 @@ class configuratorTest extends CoreTestAbstract
         $this->configurator->addComponent($component);
 
         // Create container and fail
+        $this->expectException(ConfiguratorException::class);
         $this->configurator->createContainer();
     }
 
@@ -175,11 +176,11 @@ class configuratorTest extends CoreTestAbstract
     /**
      * @depends testSetLogDirectory
      * @covers ::setLogDirectory
-     * @expectedException \FuzeWorks\Exception\InvalidArgumentException
      */
     public function testSetLogDirectoryNotDirectory()
     {
         // Set the directory
+        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
         $this->configurator->setLogDirectory('not_exist');
     }
 
@@ -204,11 +205,11 @@ class configuratorTest extends CoreTestAbstract
     /**
      * @depends testSetTempDirectory
      * @covers ::setTempDirectory
-     * @expectedException \FuzeWorks\Exception\InvalidArgumentException
      */
     public function testSetTempDirectoryNotDirectory()
     {
         // Set the directory
+        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
         $this->configurator->setTempDirectory('not_exist');
     }
 
@@ -245,10 +246,10 @@ class configuratorTest extends CoreTestAbstract
     /**
      * @depends testAddComponentDirectory
      * @covers ::addDirectory
-     * @expectedException \FuzeWorks\Exception\InvalidArgumentException
      */
     public function testAddComponentDirectoryNotExist()
     {
+        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
         $this->configurator->addDirectory('not_exist', 'irrelevant');
     }
 
@@ -342,11 +343,11 @@ class configuratorTest extends CoreTestAbstract
 
     /**
      * @depends testSetTimezone
-     * @expectedException \FuzeWorks\Exception\InvalidArgumentException
      * @covers ::setTimeZone
      */
     public function testSetTimezoneInvalid()
     {
+        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
         $this->configurator->setTimeZone('Europe/Amsterdamned');
     }
 
@@ -472,10 +473,10 @@ class configuratorTest extends CoreTestAbstract
     /**
      * @depends testEnableDebugMode
      * @covers ::setDebugAddress
-     * @expectedException \FuzeWorks\Exception\InvalidArgumentException
      */
     public function testSetDebugAddressInvalidArgument()
     {
+        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
         $this->configurator->setDebugAddress(null);
     }
 }

@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
@@ -45,9 +45,8 @@ $configurator->setLogDirectory(__DIR__ . '/temp');
 $configurator->setTimeZone('Europe/Amsterdam');
 
 // Debug related
-$configurator->enableDebugMode(true);
+$configurator->enableDebugMode();
 $configurator->setDebugAddress('ALL');
-//$configurator->setDebugEmail('example@mail.com');
 
 $container = $configurator->createContainer();
 return $container;

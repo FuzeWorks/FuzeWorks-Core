@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Config;
 use FuzeWorks\Event\ConfigGetEvent;
+use FuzeWorks\Exception\ConfigException;
 use FuzeWorks\Priority;
 use FuzeWorks\Events;
 
@@ -53,7 +54,7 @@ class configTest extends CoreTestAbstract
      */
 	protected $config;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$this->config = new Config();
 	}
@@ -90,10 +91,10 @@ class configTest extends CoreTestAbstract
 	/**
 	 * @depends testLoadConfig
      * @covers ::loadConfigFile
-	 * @expectedException FuzeWorks\Exception\ConfigException
 	 */
 	public function testFileNotFound()
 	{
+	    $this->expectException(ConfigException::class);
 		$this->config->getConfig('notFound');
 	}
 

@@ -31,10 +31,11 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Core;
+use FuzeWorks\Exception\LibraryException;
 use FuzeWorks\Factory;
 use FuzeWorks\Libraries;
 
@@ -52,7 +53,7 @@ class libraryTest extends CoreTestAbstract
      */
     protected $libraries;
 
-    public function setUp()
+    public function setUp(): void
     {
         // Load new libraries class
         $this->libraries = new Libraries();
@@ -110,10 +111,10 @@ class libraryTest extends CoreTestAbstract
      * @depends testGetLibraryFromDirectory
      * @covers ::get
      * @covers ::initLibrary
-     * @expectedException FuzeWorks\Exception\LibraryException
      */
     public function testGetLibraryFail()
     {
+        $this->expectException(LibraryException::class);
         $this->libraries->get('FailLoadLibrary');
     }
 
@@ -121,10 +122,10 @@ class libraryTest extends CoreTestAbstract
      * @depends testGetLibraryFromDirectory
      * @covers ::get
      * @covers ::initLibrary
-     * @expectedException FuzeWorks\Exception\LibraryException
      */
     public function testGetLibraryNoName()
     {
+        $this->expectException(LibraryException::class);
         $this->libraries->get('');
     }
 
@@ -132,10 +133,10 @@ class libraryTest extends CoreTestAbstract
      * @depends testGetLibraryFromDirectory
      * @covers ::get
      * @covers ::initLibrary
-     * @expectedException FuzeWorks\Exception\LibraryException
      */
     public function testGetLibraryNoClass()
     {
+        $this->expectException(LibraryException::class);
         $this->libraries->get('TestGetLibraryNoClass');
     }
 
@@ -188,10 +189,10 @@ class libraryTest extends CoreTestAbstract
     /**
      * @depends testAddLibraryClass
      * @covers ::addLibraryClass
-     * @expectedException \FuzeWorks\Exception\LibraryException
      */
     public function testAddLibraryClassFail()
     {
+        $this->expectException(LibraryException::class);
         $this->libraries->addLibraryClass('LibraryClassFail', '\Case\Not\Exist');
     }
 
@@ -214,14 +215,14 @@ class libraryTest extends CoreTestAbstract
     /**
      * @depends testAddLibraryWithAutoloader
      * @covers ::initLibrary
-     * @expectedException \FuzeWorks\Exception\LibraryException
      */
     public function testAddBadAutoloader()
     {
+        $this->expectException(LibraryException::class);
         $this->assertInstanceOf('Application\Library\TestAddBadAutoloader', $this->libraries->get('TestAddBadAutoloader'));
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 
