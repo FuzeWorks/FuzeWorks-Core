@@ -1,20 +1,16 @@
 {
 	"name": "fuzeworks/core",
 	"description": "FuzeWorks Framework Core",
-	"homepage": "https://techfuze.net/fuzeworks",
+	"homepage": "https://i15.nl/fuzeworks",
 	"license": ["MIT"],
 	"authors": [
 		{
-			"name": "TechFuze",
-			"homepage": "https://techfuze.net"
-		},
-		{
-			"name": "FuzeWorks Community",
-			"homepage": "https://techfuze.net/fuzeworks/contributors"
+			"name": "Abel Hoogeveen",
+			"homepage": "https://i15.nl"
 		}
 	],
 	"require": {
-		"php": ">=7.2.0"
+		"php": ">=7.4.0"
 	},
 	"require-dev": {
         "phpunit/phpunit": "^9",

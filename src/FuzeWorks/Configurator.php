@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -345,7 +345,7 @@ class Configurator
         Core::$logDir = $this->parameters['logDir'];
 
         // Then prepare the debugger
-        $debug = ($this->parameters['debugEnabled'] && $this->parameters['debugMatch'] ? true : false);
+        $debug = $this->parameters['debugEnabled'] && $this->parameters['debugMatch'];
 
         // Then load the framework
         $container = Core::init();

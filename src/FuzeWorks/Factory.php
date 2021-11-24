@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -173,6 +173,9 @@ class Factory
         // Initialize all components
         foreach ($this as $component)
         {
+            if (!is_object($component))
+                continue;
+
             if (method_exists($component, 'init'))
                 $component->init();
         }
