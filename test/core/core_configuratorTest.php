@@ -34,6 +34,7 @@
  * @version Version 1.3.0
  */
 
+use FuzeWorks\Config;
 use FuzeWorks\Configurator;
 use FuzeWorks\Core;
 use FuzeWorks\Exception\ConfiguratorException;
@@ -53,7 +54,7 @@ class configuratorTest extends CoreTestAbstract
     /**
      * @var Configurator
      */
-    protected $configurator;
+    protected Configurator $configurator;
 
     public function setUp(): void
     {
@@ -380,7 +381,7 @@ class configuratorTest extends CoreTestAbstract
         $this->configurator->createContainer();
 
         // Verify that the variable is set in the Config class
-        $this->assertEquals(['test' => ['somekey' => 'somevalue']], \FuzeWorks\Config::$configOverrides);
+        $this->assertEquals(['test' => ['somekey' => 'somevalue']], Config::$configOverrides);
     }
 
     /* ---------------------------------- Debugging ------------------------------------------------- */
@@ -498,7 +499,7 @@ class MockComponent implements iComponent
         return $configurator;
     }
 
-    public function onCreateContainer(Factory $container)
+    public function onCreateContainer(Factory $container): Factory
     {
         return $container;
     }

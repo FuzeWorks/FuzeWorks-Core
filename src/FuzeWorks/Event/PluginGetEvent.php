@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.1.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\Event;
@@ -51,14 +51,14 @@ class PluginGetEvent extends Event
      *
      * @var string
      */
-	public $pluginName;
+	public string $pluginName;
 
     /**
      * Potential plugin to return instead. If set, the plugins class will return this object 
      *
-     * @var object
+     * @var object|null
      */	
-	public $plugin = null;
+	public ?object $plugin = null;
 
 	public function init($pluginName)
 	{
@@ -70,7 +70,7 @@ class PluginGetEvent extends Event
      *
      * @param object $plugin
      */	
-	public function setPlugin($plugin)
+	public function setPlugin(object $plugin)
 	{
 		$this->plugin = $plugin;
 	}
@@ -80,8 +80,8 @@ class PluginGetEvent extends Event
      *
      * @return object|null $plugin
      */	
-	public function getPlugin()
-	{
+	public function getPlugin(): ?object
+    {
 		return $this->plugin;
 	}
 }

@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -45,7 +45,7 @@ trait ComponentPathsTrait
      *
      * @var array $componentPaths
      */
-    protected $componentPaths = [];
+    protected array $componentPaths = [];
 
     /**
      * Set the directories. Automatically gets invoked if componentPaths are added by FuzeWorks\Configurator.
@@ -63,7 +63,7 @@ trait ComponentPathsTrait
      * @param string $componentPath
      * @param int $priority
      */
-    public function addComponentPath($componentPath, $priority = Priority::NORMAL)
+    public function addComponentPath(string $componentPath, int $priority = Priority::NORMAL)
     {
         if (!isset($this->componentPaths[$priority]))
             $this->componentPaths[$priority] = [];
@@ -78,7 +78,7 @@ trait ComponentPathsTrait
      * @param string $componentPath
      * @param int $priority
      */
-    public function removeComponentPath($componentPath, $priority = Priority::NORMAL)
+    public function removeComponentPath(string $componentPath, int $priority = Priority::NORMAL)
     {
         if (!isset($this->componentPaths[$priority]))
             return;
@@ -93,8 +93,8 @@ trait ComponentPathsTrait
      * @param int $priority
      * @return array of paths where objects for this component can be found
      */
-    public function getComponentPaths($priority = Priority::NORMAL): array
+    public function getComponentPaths(int $priority = Priority::NORMAL): array
     {
-        return (isset($this->componentPaths[$priority]) ? $this->componentPaths[$priority] : []);
+        return $this->componentPaths[$priority] ?? [];
     }
 }

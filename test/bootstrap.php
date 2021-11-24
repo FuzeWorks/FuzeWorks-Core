@@ -48,6 +48,4 @@ $configurator->setTimeZone('Europe/Amsterdam');
 $configurator->enableDebugMode();
 $configurator->setDebugAddress('ALL');
 
-$container = $configurator->createContainer();
-return $container;
-
+return $configurator->createContainer();

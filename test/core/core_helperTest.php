@@ -50,7 +50,7 @@ class helperTest extends CoreTestAbstract
     /**
      * @var Helpers
      */
-	protected $helpers;
+	protected Helpers $helpers;
 
 	public function setUp(): void
 	{

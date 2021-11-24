@@ -52,7 +52,7 @@ class configTest extends CoreTestAbstract
     /**
      * @var Config
      */
-	protected $config;
+	protected Config $config;
 
 	public function setUp(): void
 	{
@@ -184,11 +184,11 @@ class configTest extends CoreTestAbstract
         $this->assertSame($config, $config2);
 
         // First test the existing key
-        $this->assertEquals($config->key, 'value');
+        $this->assertEquals('value', $config->key);
 
         // Change it and test if it's different now
         $config->key = 'other_value';
-        $this->assertEquals($config2->key, 'other_value');
+        $this->assertEquals('other_value', $config2->key);
     }
 
     /**

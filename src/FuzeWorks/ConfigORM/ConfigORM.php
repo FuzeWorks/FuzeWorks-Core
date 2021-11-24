@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\ConfigORM;
@@ -52,7 +52,7 @@ class ConfigORM extends ConfigORMAbstract
      *
      * @var string filename
      */
-    private $file;
+    private string $file;
 
     /**
      * Load the ConfigORM file.

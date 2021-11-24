@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.1.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 use FuzeWorks\Factory;
 use FuzeWorks\Events;
@@ -64,11 +64,14 @@ class pluginGetEventTest extends CoreTestAbstract
     {
         // Create mock listener
         Events::addListener(
-            function($event){$event->setPlugin('test_string');return $event;}, 
+            function($event){
+                $z = new stdClass();
+                $event->setPlugin($z);return $event;
+                },
             'pluginGetEvent', 
             Priority::NORMAL);
 
         // And fire the event
-        $this->assertEquals('test_string', Factory::getInstance()->plugins->get('test'));
+        $this->assertInstanceOf('\stdClass', Factory::getInstance()->plugins->get('test'));
     }
 }

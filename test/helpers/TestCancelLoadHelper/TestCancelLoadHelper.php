@@ -31,13 +31,13 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 if ( ! function_exists('testCancelLoadHelper'))
 {
 
-    function testCancelLoadHelper($someParameter)
+    function testCancelLoadHelper(): string
     {
         return 'SomeResult';
     }

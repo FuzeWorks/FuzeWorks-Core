@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -57,21 +57,21 @@ class Logger {
      *
      * @var array
      */
-    public static $logs = [];
+    public static array $logs = [];
 
     /**
      * whether to output the log after FuzeWorks has run.
      *
      * @var bool
      */
-    private static $print_to_screen = false;
+    private static bool $print_to_screen = false;
 
     /**
      * Whether the Logger has been enabled or not
      *
      * @var bool
      */
-    private static $isEnabled = false;
+    private static bool $isEnabled = false;
 
     /**
      * whether to output the log of the last entire request to a file after FuzeWorks has run.
@@ -92,21 +92,21 @@ class Logger {
      * 
      * @var string Template name
      */
-    private static $logger_template = 'logger_cli';
+    private static string $logger_template = 'logger_cli';
 
     /**
      * whether to output the log after FuzeWorks has run, regardless of conditions.
      *
      * @var bool
      */
-    public static $debug = false;
+    public static bool $debug = false;
 
     /**
      * List of all benchmark markpoints.
      * 
      * @var array
      */
-    public static $markPoints = [];
+    public static array $markPoints = [];
 
     /**
      * Initiates the Logger.
@@ -188,8 +188,8 @@ class Logger {
      */
     public static function enableHandlers()
     {
-        Core::addErrorHandler(['\FuzeWorks\Logger', 'errorHandler'], Priority::NORMAL);
-        Core::addExceptionHandler(['\FuzeWorks\Logger', 'exceptionHandler'], Priority::NORMAL);
+        Core::addErrorHandler(['\FuzeWorks\Logger', 'errorHandler']);
+        Core::addExceptionHandler(['\FuzeWorks\Logger', 'exceptionHandler']);
     }
 
     /**
@@ -200,8 +200,8 @@ class Logger {
      */
     public static function disableHandlers()
     {
-        Core::removeErrorHandler(['\FuzeWorks\Logger', 'errorHandler'], Priority::NORMAL);
-        Core::removeExceptionHandler(['\FuzeWorks\Logger', 'exceptionHandler'], Priority::NORMAL);
+        Core::removeErrorHandler(['\FuzeWorks\Logger', 'errorHandler']);
+        Core::removeExceptionHandler(['\FuzeWorks\Logger', 'exceptionHandler']);
     }
 
     /**
@@ -265,7 +265,7 @@ class Logger {
      * @param int Line. The line on which the error occured.
      * @param array context. Some of the error's relevant variables
      */
-    public static function errorHandler($type = E_USER_NOTICE, $error = 'Undefined Error', $errFile = null, $errLine = null)
+    public static function errorHandler(int $type = E_USER_NOTICE, $error = 'Undefined Error', $errFile = null, $errLine = null)
     {
         // Check type
         $thisType = self::getType($type);
@@ -285,7 +285,7 @@ class Logger {
      * @param Exception $exception The occured exception.
      * @param bool $haltExecution. Defaults to true
      */
-    public static function exceptionHandler($exception, bool $haltExecution = true)
+    public static function exceptionHandler(Exception $exception, bool $haltExecution = true)
     {
         $LOG = array('type' => 'EXCEPTION',
             'message' => $exception->getMessage(),
@@ -372,10 +372,10 @@ class Logger {
      * Multiple calls to this function can be made so that several
      * execution points can be timed.
      * 
-     * @param   string    $name   Marker name
+     * @param string $name   Marker name
      * @return  void
      */
-    public static function mark($name)
+    public static function mark(string $name)
     {
         $LOG = array('type' => 'BMARK',
             'message' => (!is_null($name) ? $name : ''),
@@ -388,30 +388,30 @@ class Logger {
     }
 
     /**
-     * Create a information log entry.
+     * Create an information log entry.
      *
      * @param string $msg  The information to be logged
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function log($msg, $mod = null, $file = null, $line = null)
+    public static function log(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         self::logInfo($msg, $mod, $file, $line);
     }
 
     /**
-     * Create a information log entry.
+     * Create an information log entry.
      *
      * @param string $msg  The information to be logged
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function logInfo($msg, $mod = null, $file = null, $line = null)
+    public static function logInfo(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'INFO',
-            'message' => (!is_null($msg) ? $msg : ''),
+            'message' => ($msg),
             'logFile' => (!is_null($file) ? $file : ''),
             'logLine' => (!is_null($line) ? $line : ''),
             'context' => (!is_null($mod) ? $mod : ''),
@@ -421,17 +421,17 @@ class Logger {
     }
 
     /**
-     * Create a information log entry.
+     * Create an information log entry.
      *
      * @param string $msg  The information to be logged
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function logDebug($msg, $mod = null, $file = null, $line = null)
+    public static function logDebug(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'DEBUG',
-            'message' => (!is_null($msg) ? $msg : ''),
+            'message' => ($msg),
             'logFile' => (!is_null($file) ? $file : ''),
             'logLine' => (!is_null($line) ? $line : ''),
             'context' => (!is_null($mod) ? $mod : ''),
@@ -444,14 +444,14 @@ class Logger {
      * Create a error log entry.
      *
      * @param string $msg  The information to be logged
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function logError($msg, $mod = null, $file = null, $line = null)
+    public static function logError(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'ERROR',
-            'message' => (!is_null($msg) ? $msg : ''),
+            'message' => ($msg),
             'logFile' => (!is_null($file) ? $file : ''),
             'logLine' => (!is_null($line) ? $line : ''),
             'context' => (!is_null($mod) ? $mod : ''),
@@ -464,14 +464,14 @@ class Logger {
      * Create a warning log entry.
      *
      * @param string $msg  The information to be logged
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function logWarning($msg, $mod = null, $file = null, $line = null)
+    public static function logWarning(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'WARNING',
-            'message' => (!is_null($msg) ? $msg : ''),
+            'message' => ($msg),
             'logFile' => (!is_null($file) ? $file : ''),
             'logLine' => (!is_null($line) ? $line : ''),
             'context' => (!is_null($mod) ? $mod : ''),
@@ -484,14 +484,14 @@ class Logger {
      * Create a new Level log entry. Used to categorise logs.
      *
      * @param string $msg  The name of the new level
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function newLevel($msg, $mod = null, $file = null, $line = null)
+    public static function newLevel(string $msg, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'LEVEL_START',
-            'message' => (!is_null($msg) ? $msg : ''),
+            'message' => ($msg),
             'logFile' => (!is_null($file) ? $file : ''),
             'logLine' => (!is_null($line) ? $line : ''),
             'context' => (!is_null($mod) ? $mod : ''),
@@ -503,12 +503,12 @@ class Logger {
     /**
      * Create a stop Level log entry. Used to close log categories.
      *
-     * @param string $msg  The name of the new level
-     * @param string $mod  The name of the module
-     * @param string $file The file where the log occurred
-     * @param int    $line The line where the log occurred
+     * @param string|null $msg  The name of the new level
+     * @param string|null $mod  The name of the module
+     * @param string|null $file The file where the log occurred
+     * @param int|null $line The line where the log occurred
      */
-    public static function stopLevel($msg = null, $mod = null, $file = null, $line = null)
+    public static function stopLevel(string $msg = null, string $mod = null, string $file = null, int $line = null)
     {
         $LOG = array('type' => 'LEVEL_STOP',
             'message' => (!is_null($msg) ? $msg : ''),
@@ -530,42 +530,29 @@ class Logger {
      *
      * @return string String representation
      */
-    public static function getType($type): string
+    public static function getType(int $type): string
     {
         switch ($type) {
+            case E_PARSE:
+            case E_CORE_ERROR:
+            case E_COMPILE_ERROR:
+            case E_USER_ERROR:
+            case E_STRICT:
+            case E_RECOVERABLE_ERROR:
             case E_ERROR:
                 return 'ERROR';
-            case E_WARNING:
-                return 'WARNING';
-            case E_PARSE:
-                return 'ERROR';
             case E_NOTICE:
-                return 'WARNING';
-            case E_CORE_ERROR:
-                return 'ERROR';
             case E_CORE_WARNING:
-                return 'WARNING';
-            case E_COMPILE_ERROR:
-                return 'ERROR';
             case E_COMPILE_WARNING:
-                return 'WARNING';
-            case E_USER_ERROR:
-                return 'ERROR';
             case E_USER_WARNING:
-                return 'WARNING';
             case E_USER_NOTICE:
-                return 'WARNING';
             case E_USER_DEPRECATED:
-                return 'WARNING';
-            case E_STRICT:
-                return 'ERROR';
-            case E_RECOVERABLE_ERROR:
-                return 'ERROR';
             case E_DEPRECATED:
+            case E_WARNING:
                 return 'WARNING';
         }
 
-        return $type = 'Unknown error: ' . $type;
+        return 'Unknown error: ' . $type;
     }
 
     /**
@@ -600,8 +587,6 @@ class Logger {
     private static function getRelativeTime(): float
     {
         $startTime = STARTTIME;
-        $time = microtime(true) - $startTime;
-
-        return $time;
+        return microtime(true) - $startTime;
     }
 }

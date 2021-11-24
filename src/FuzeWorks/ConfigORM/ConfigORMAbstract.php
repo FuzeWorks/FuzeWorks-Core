@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\ConfigORM;
@@ -53,14 +53,14 @@ abstract class ConfigORMAbstract implements Iterator
      *
      * @var array Config file
      */
-    protected $originalCfg = [];
+    protected array $originalCfg = [];
 
     /**
      * The current state of a config file.
      *
      * @var array Config file
      */
-    protected $cfg = [];
+    protected array $cfg = [];
 
     /**
      * Revert to the original conditions of the config file.
@@ -98,7 +98,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @return bool true on isset, false on not
      * @codeCoverageIgnore
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->cfg[$name]);
     }
@@ -110,7 +110,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @return mixed Value of the requested entry
      * @codeCoverageIgnore
      */
-    public function __get($name)
+    public function __get(string $name)
     {
         return $this->cfg[$name];
     }
@@ -122,7 +122,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @return mixed Value of the requested entry
      * @codeCoverageIgnore
      */
-    public function get($name)
+    public function get(string $name)
     {
         return $this->cfg[$name];
     }
@@ -134,7 +134,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @param mixed  $value Value of the entry
      * @codeCoverageIgnore
      */
-    public function __set($name, $value)
+    public function __set(string $name, $value)
     {
         $this->cfg[$name] = $value;
     }
@@ -146,7 +146,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @param mixed  $value Value of the entry
      * @codeCoverageIgnore
      */
-    public function set($name, $value)
+    public function set(string $name, $value)
     {
         $this->cfg[$name] = $value;
     }
@@ -202,7 +202,7 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function valid()
+    public function valid(): bool
     {
         return key($this->cfg) !== null;
     }
@@ -212,7 +212,7 @@ abstract class ConfigORMAbstract implements Iterator
      *
      * @return array Config file
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->cfg;
     }

@@ -67,56 +67,55 @@ class Factory
 	/**
 	 * The Factory instance that is shared by default when calling Factory::getInstance();
 	 * 
-	 * @var Factory Default shared instance
+	 * @var Factory|null Default shared instance
 	 */
-	private static $sharedFactoryInstance;
+	private static ?Factory $sharedFactoryInstance = null;
 
     /**
      * Whether the Factory has been initialized or not
      *
      * @var bool $initialized
      */
-	private $initialized = false;
+	private bool $initialized = false;
 
 	/**
 	 * Config Object
 	 * @var Config
 	 */
-	public $config;
+	public Config $config;
 	
 	/**
 	 * Logger Object
 	 * @var Logger
 	 */
-	public $logger;
+	public Logger $logger;
 	
 	/**
 	 * Events Object
 	 * @var Events
 	 */
-	public $events;
+	public Events $events;
 	
 	/**
 	 * Libraries Object
 	 * @var Libraries
 	 */
-	public $libraries;
+	public Libraries $libraries;
 	
 	/**
 	 * Helpers Object
 	 * @var Helpers
 	 */
-	public $helpers;
+	public Helpers $helpers;
 	
 	/**
 	 * Plugins Object
 	 * @var Plugins
 	 */
-	public $plugins;
+	public Plugins $plugins;
 
     /**
      * Factory instance constructor. Should only really be called once
-     * @throws ConfigException
      * @throws FactoryException
      */
 	public function __construct()
@@ -140,12 +139,9 @@ class Factory
 		// Otherwise, copy the existing instances
 		$x = self::getInstance();
 		foreach ($x as $key => $value)
-		{
 		    $this->{$key} = $value;
-		}
 
-		return;
-	}
+    }
 
     /**
      * Finalizes the Factory and sends out a coreStartEvent
@@ -226,7 +222,7 @@ class Factory
      * @return Factory Instance
      * @throws FactoryException
      */
-	public function newInstance($className, $namespace = 'FuzeWorks\\'): self
+	public function newInstance(string $className, string $namespace = 'FuzeWorks\\'): self
 	{
 		// Determine the class to load
 		$instanceName = strtolower($className);
@@ -288,7 +284,7 @@ class Factory
 	 * @param mixed  $object    Object to replace the class with
 	 * @return Factory Instance
 	 */
-	public function setInstance($objectName, $object): self
+	public function setInstance(string $objectName, $object): self
 	{
 		// Determine the instance name
 		$instanceName = strtolower($objectName);
@@ -308,7 +304,7 @@ class Factory
      * @return Factory Factory Instance
      * @throws FactoryException
      */
-	public function removeInstance($className): self
+	public function removeInstance(string $className): self
 	{
 		// Determine the instance name
 		$instanceName = strtolower($className);
@@ -331,7 +327,7 @@ class Factory
      * @param $componentName
      * @return bool
      */
-    public function instanceIsset($componentName)
+    public function instanceIsset($componentName): bool
     {
         return isset($this->{$componentName});
     }

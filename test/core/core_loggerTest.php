@@ -47,9 +47,9 @@ use FuzeWorks\Exception\LoggerException;
  */
 class loggerTest extends CoreTestAbstract
 {
-    protected $logger;
+    protected Logger $logger;
 
-    protected $output;
+    protected string $output;
 
     public function setUp(): void
     {
@@ -105,7 +105,7 @@ class loggerTest extends CoreTestAbstract
             E_STRICT => 'ERROR',
             E_RECOVERABLE_ERROR => 'ERROR',
             E_DEPRECATED => 'WARNING',
-            'UNKNOWN' => 'Unknown error: UNKNOWN'
+            0 => 'Unknown error: 0'
         );
 
         foreach ($types as $errorType => $output) {

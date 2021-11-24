@@ -34,7 +34,6 @@
  * @version Version 1.3.0
  */
 
-use FuzeWorks\Core;
 use FuzeWorks\Exception\PluginException;
 use FuzeWorks\Factory;
 use FuzeWorks\Plugins;
@@ -51,7 +50,7 @@ class pluginTest extends CoreTestAbstract
     /**
      * @var FuzeWorks\Plugins
      */
-    protected $plugins;
+    protected Plugins $plugins;
 
     public function setUp(): void
     {

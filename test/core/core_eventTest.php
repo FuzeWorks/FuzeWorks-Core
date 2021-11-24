@@ -31,10 +31,9 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.0.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 use FuzeWorks\Events;
-use FuzeWorks\Event;
 use FuzeWorks\Priority;
 
 /**

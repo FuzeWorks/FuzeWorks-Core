@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 namespace Application\Plugin;
 use FuzeWorks\iPluginHeader;
@@ -48,8 +48,8 @@ class TestGetPluginMethodHeader implements iPluginHeader
 	{
 	}
 
-	public function getPlugin()
-	{
+	public function getPlugin(): string
+    {
 		return 'test_string';
 	}
 

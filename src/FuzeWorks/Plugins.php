@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.1.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -41,7 +41,6 @@ use FuzeWorks\Exception\CoreException;
 use FuzeWorks\Exception\FactoryException;
 use FuzeWorks\Exception\PluginException;
 use ReflectionClass;
-use ReflectionException;
 
 /**
  * Plugins Class.
@@ -72,7 +71,7 @@ class Plugins
 	 * 
 	 * @var array Array of loaded plugins
 	 */
-	protected $plugins = array();
+	protected array $plugins = array();
 
 	/**
 	 * Array of plugin header classes. 
@@ -80,14 +79,14 @@ class Plugins
 	 * 
 	 * @var array Array of loaded plugin header classes
 	 */
-	protected $headers = array();
+	protected array $headers = array();
 
 	/**
 	 * Config file for the plugin system 
 	 * 
 	 * @var ConfigORM
 	 */	
-	protected $cfg;
+	protected ConfigORM $cfg;
 
     /**
      * Called upon initialization of the Container
@@ -142,11 +141,7 @@ class Plugins
                         // Load the header
                         $this->loadHeader($header);
                     }
-
-                    // If it doesn't exist, skip it
-                    continue;
                 }
-
             }
         }
 	}
@@ -197,13 +192,12 @@ class Plugins
      * Get a plugin.
      *
      * @param string $pluginName Name of the plugin
-     * @param array $parameters Parameters to send to the __construct() method
+     * @param array|null $parameters Parameters to send to the __construct() method
      * @return mixed Plugin on success, bool on cancellation
      * @throws Exception\EventException
      * @throws PluginException
-     * @throws ReflectionException
      */
-	public function get($pluginName, array $parameters = null)
+	public function get(string $pluginName, array $parameters = null)
 	{
 		if (empty($pluginName))
 			throw new PluginException("Could not load plugin. No name provided", 1);
@@ -219,7 +213,7 @@ class Plugins
 		elseif ($event->getPlugin() != null)
 			return $event->getPlugin();
 
-		// Otherwise just set the variables
+		// Otherwise, just set the variables
 		$pluginName = $event->pluginName;
 
 		// Check if the plugin is already loaded and return directly

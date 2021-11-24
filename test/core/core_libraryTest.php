@@ -34,7 +34,6 @@
  * @version Version 1.3.0
  */
 
-use FuzeWorks\Core;
 use FuzeWorks\Exception\LibraryException;
 use FuzeWorks\Factory;
 use FuzeWorks\Libraries;
@@ -51,7 +50,7 @@ class libraryTest extends CoreTestAbstract
     /**
      * @var Libraries
      */
-    protected $libraries;
+    protected Libraries $libraries;
 
     public function setUp(): void
     {
@@ -168,9 +167,10 @@ class libraryTest extends CoreTestAbstract
      */
     public function testAddLibraryObject()
     {
-        $this->libraries->addLibraryObject('TestAddLibraryObject', 5);
+        $z = new stdClass();
+        $this->libraries->addLibraryObject('TestAddLibraryObject', $z);
 
-        $this->assertEquals(5, $this->libraries->get('TestAddLibraryObject'));
+        $this->assertEquals($z, $this->libraries->get('TestAddLibraryObject'));
     }
 
     /**

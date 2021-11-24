@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.0.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 use FuzeWorks\Priority;
 
@@ -62,12 +62,12 @@ class priorityTest extends CoreTestAbstract
      */
     public function testGetPriority()
     {
-        $this->assertEquals(Priority::getPriority(5), 'Priority::LOWEST');
-        $this->assertEquals(Priority::getPriority(4), 'Priority::LOW');
-        $this->assertEquals(Priority::getPriority(3), 'Priority::NORMAL');
-        $this->assertEquals(Priority::getPriority(2), 'Priority::HIGH');
-        $this->assertEquals(Priority::getPriority(1), 'Priority::HIGHEST');
-        $this->assertEquals(Priority::getPriority(0), 'Priority::MONITOR');
+        $this->assertEquals('Priority::LOWEST', Priority::getPriority(5));
+        $this->assertEquals('Priority::LOW', Priority::getPriority(4));
+        $this->assertEquals('Priority::NORMAL', Priority::getPriority(3));
+        $this->assertEquals('Priority::HIGH', Priority::getPriority(2));
+        $this->assertEquals('Priority::HIGHEST', Priority::getPriority(1));
+        $this->assertEquals('Priority::MONITOR', Priority::getPriority(0));
     }
 
     /**
@@ -83,7 +83,7 @@ class priorityTest extends CoreTestAbstract
      */
     public function testHighestPriority()
     {
-        $this->assertEquals(Priority::getHighestPriority(), Priority::MONITOR);
+        $this->assertEquals(Priority::MONITOR, Priority::getHighestPriority());
     }
 
     /**
@@ -91,7 +91,7 @@ class priorityTest extends CoreTestAbstract
      */
     public function testLowestPriority()
     {
-        $this->assertEquals(Priority::getLowestPriority(), Priority::LOWEST);
+        $this->assertEquals(Priority::LOWEST, Priority::getLowestPriority());
     }
 
 }

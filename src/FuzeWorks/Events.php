@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -66,7 +66,7 @@ class Events
      *
      * @var array
      */
-    public static $listeners = array();
+    public static array $listeners = array();
 
     /**
      * Whether the event system is enabled or not.
@@ -123,13 +123,13 @@ class Events
      *
      * @param mixed callback The callback when the events get fired, see {@link http://php.net/manual/en/language.types.callable.php PHP.net}
      * @param string $eventName The name of the event
-     * @param int    $priority  The priority, even though integers are valid, please use Priority (for example Priority::Lowest)
+     * @param int $priority  The priority, even though integers are valid, please use Priority (for example Priority::Lowest)
      *
      * @see Priority
      *
      * @throws EventException
      */
-    public static function removeListener(callable $callback, string $eventName, $priority = Priority::NORMAL)
+    public static function removeListener(callable $callback, string $eventName, int $priority = Priority::NORMAL)
     {
         if (Priority::getPriority($priority) == false) {
             throw new EventException('Unknown priority '.$priority);
@@ -169,7 +169,7 @@ class Events
             $eventName = end($eventName);
             $event = $input;
         }
-        // Otherwise try to load an event based on the input string
+        // Otherwise, try to load an event based on the input string
         elseif (is_string($input))
         {
             $eventClass = ucfirst($input);

@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
 
+use Exception;
 use FuzeWorks\Exception\CoreException;
 use FuzeWorks\Exception\EventException;
 
@@ -55,7 +56,7 @@ class Core
      *
      * @var string Framework version
      */
-    public static $version = '1.2.0';
+    public static string $version = '1.2.0';
 
     /**
      * Working directory of the Framework.
@@ -64,39 +65,39 @@ class Core
      *
      * @var string
      */
-    public static $cwd;
+    public static string $cwd;
 
-    public static $coreDir;
+    public static string $coreDir;
 
-    public static $tempDir;
+    public static string $tempDir;
 
-    public static $logDir;
+    public static string $logDir;
 
     /**
      * Array of exception handlers, sorted by priority
      *
      * @var array
      */
-    protected static $exceptionHandlers = [];
+    protected static array $exceptionHandlers = [];
 
     /**
      * Array of error handlers, sorted by priority
      *
      * @var array
      */
-    protected static $errorHandlers = [];
+    protected static array $errorHandlers = [];
 
     /**
      * Array of all classMaps which can be autoloaded.
      *
      * @var array
      */
-    protected static $autoloadMap = [];
+    protected static array $autoloadMap = [];
 
     /**
      * Initializes the core.
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public static function init(): Factory
     {
@@ -153,7 +154,7 @@ class Core
      *
      * @param string $varName
      * @param string|null $default
-     * @return mixed
+     * @return array|string|null
      */
     public static function getEnv(string $varName, string $default = null)
     {
@@ -164,7 +165,7 @@ class Core
         if ($var === FALSE)
             return $default;
 
-        // Otherwise return the variable itself
+        // Otherwise, return the variable itself
         return $var;
     }
 

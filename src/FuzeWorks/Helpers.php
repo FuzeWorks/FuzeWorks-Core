@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -49,7 +49,7 @@ use FuzeWorks\Exception\HelperException;
  * Text Helpers perform various text formatting routines, Cookie Helpers set and read cookies, 
  * File Helpers help you deal with files, etc.
  *
- * Unlike most other systems in FuzeWorks, Helpers are not written in an Object Oriented format. 
+ * Unlike most other systems in FuzeWorks, Helpers are not written in an Object-Oriented format.
  * They are simple, procedural functions. Each helper function performs one specific task, with no dependence on other functions.
  *
  * FuzeWorks does not load Helper Files by default, so the first step in using a Helper is to load it. Once loaded, 
@@ -67,7 +67,7 @@ class Helpers
      * 
      * @var array Array of loaded helperNames
      */
-    protected $helpers = [];
+    protected array $helpers = [];
 
     /**
      * Load a helper.
@@ -145,14 +145,14 @@ class Helpers
 
     /**
      * Alias for load
-     * @see load() for more details
-     *
      * @param string $helperName Name of the helper
      * @param array $helperPaths
      * @return bool                     Whether the helper was successfully loaded (true if yes)
      * @throws HelperException
+     *@see load() for more details
+     *
      */
-    public function get($helperName, array $helperPaths = []): bool
+    public function get(string $helperName, array $helperPaths = []): bool
     {
         return $this->load($helperName, $helperPaths);
     }

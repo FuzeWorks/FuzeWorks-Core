@@ -229,7 +229,7 @@ class eventsTest extends CoreTestAbstract
     public function testRemoveUnsetListener()
     {
         Events::addListener(function($e) {}, 'mockEvent', Priority::NORMAL);
-        $this->assertNull(Events::removeListener(function($x) {echo "Called"; }, 'mockEvent', Priority::NORMAL));
+        $this->assertNull(Events::removeListener(function() {echo "Called"; }, 'mockEvent', Priority::NORMAL));
     }
 
     /**

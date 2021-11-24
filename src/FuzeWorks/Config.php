@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -57,19 +57,19 @@ class Config
      * 
      * @var array Array of all loaded config file ORM's
      */
-    protected $cfg = [];
+    protected array $cfg = [];
 
     /**
      * Array of config values that will be overridden
      *
      * @var array of config values
      */
-    public static $configOverrides = [];
+    public static array $configOverrides = [];
 
     /**
      * Retrieve a config file object
      * 
-     * @param string $configName  Name of the config file. Eg. 'main'
+     * @param string $configName  Name of the config file. E.g. 'main'
      * @param array  $configPaths Optional array of where to look for the config files
      * @return  ConfigORM of the config file. Allows for easy reading and editing of the file
      * @throws  ConfigException
@@ -92,7 +92,7 @@ class Config
         else
             $paths = $this->componentPaths;
 
-        // Otherwise try and load a new one
+        // Otherwise, try and load a new one
         $this->cfg[$configName] = $this->loadConfigFile($configName, $paths);
         return $this->cfg[$configName];
     }
@@ -128,7 +128,7 @@ class Config
     /**
      * Determine whether the file exists and, if so, load the ConfigORM
      * 
-     * @param string $configName  Name of the config file. Eg. 'main'
+     * @param string $configName  Name of the config file. E.g. 'main'
      * @param array  $configPaths Required array of where to look for the config files
      * @return  ConfigORM of the config file. Allows for easy reading and editing of the file
      * @throws  ConfigException
