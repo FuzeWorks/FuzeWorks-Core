@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Event;
 use FuzeWorks\Events;
+use FuzeWorks\Exception\EventException;
 use FuzeWorks\Priority;
 
 /**
@@ -145,21 +146,21 @@ class eventsTest extends CoreTestAbstract
 
     /**
      * @depends testFireEvent
-     * @expectedException FuzeWorks\Exception\EventException
      * @covers ::fireEvent
      */
     public function testInvalidTypeEvent()
     {
+        $this->expectException(EventException::class);
         Events::fireEvent(array('x', 'y', 'z'));
     }
 
     /**
      * @depends testFireEvent
      * @covers ::fireEvent
-     * @expectedException FuzeWorks\Exception\EventException
      */
     public function testInvalidClassEvent()
     {
+        $this->expectException(EventException::class);
         Events::fireEvent('nonExistingEvent', 'x', 'y', 'z');
     }
 
@@ -185,30 +186,30 @@ class eventsTest extends CoreTestAbstract
     /**
      * @depends testAddAndRemoveListener
      * @covers ::addListener
-     * @expectedException FuzeWorks\Exception\EventException
      */
     public function testAddInvalidPriorityListener()
     {
+        $this->expectException(EventException::class);
         Events::addListener(function($event){}, 'mockEvent', 99);
     }
 
     /**
      * @depends testAddAndRemoveListener
      * @covers ::addListener
-     * @expectedException FuzeWorks\Exception\EventException
      */
     public function testAddInvalidNameListener()
     {
+        $this->expectException(EventException::class);
         Events::addListener(function($e) {}, '', Priority::NORMAL);
     }
 
     /**
      * @depends testAddAndRemoveListener
      * @covers ::removeListener
-     * @expectedException FuzeWorks\Exception\EventException
      */
     public function testRemoveInvalidPriorityListener()
     {
+        $this->expectException(EventException::class);
         Events::removeListener(function($event){}, 'mockEvent', 99);
     }
 
@@ -228,7 +229,7 @@ class eventsTest extends CoreTestAbstract
     public function testRemoveUnsetListener()
     {
         Events::addListener(function($e) {}, 'mockEvent', Priority::NORMAL);
-        $this->assertNull(Events::removeListener(function($x) {echo "Called"; }, 'mockEvent', Priority::NORMAL));
+        $this->assertNull(Events::removeListener(function() {echo "Called"; }, 'mockEvent', Priority::NORMAL));
     }
 
     /**

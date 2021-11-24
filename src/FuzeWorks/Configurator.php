@@ -31,10 +31,11 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
+use Exception;
 use FuzeWorks\Exception\ConfiguratorException;
 use FuzeWorks\Exception\InvalidArgumentException;
 
@@ -58,14 +59,14 @@ class Configurator
      *
      * @var array
      */ 
-    protected $parameters = ['debugEnabled' => false];
+    protected array $parameters = ['debugEnabled' => false];
 
     /**
      * Components that have been added to FuzeWorks
      *
      * @var iComponent[]
      */
-    protected $components = [];
+    protected array $components = [];
 
     /**
      * Directories that will be passed to FuzeWorks components. 
@@ -74,14 +75,14 @@ class Configurator
      *
      * @var array of directories
      */     
-    protected $directories = [];
+    protected array $directories = [];
 
     /**
      * Array of ComponentClass methods to be invoked once ComponentClass is loaded
      *
      * @var DeferredComponentClass[]
      */
-    protected $deferredComponentClassMethods = [];
+    protected array $deferredComponentClassMethods = [];
 
     const COOKIE_SECRET = 'fuzeworks-debug';
 
@@ -128,7 +129,7 @@ class Configurator
      * @return $this
      * @throws InvalidArgumentException
      */
-    public function addDirectory(string $directory, string $category, $priority = Priority::NORMAL): Configurator
+    public function addDirectory(string $directory, string $category, int $priority = Priority::NORMAL): Configurator
     {
         if (!file_exists($directory))
             throw new InvalidArgumentException("Could not add directory. Directory does not exist.");
@@ -172,7 +173,7 @@ class Configurator
      * @param   mixed    $parameters,...     Parameters for the method to be invoked
      * @return DeferredComponentClass
      */
-    public function deferComponentClassMethod(string $componentClass, string $method, callable $callable = null)
+    public function deferComponentClassMethod(string $componentClass, string $method, callable $callable = null): DeferredComponentClass
     {
         // Retrieve arguments
         $arguments = (func_num_args() > 3 ? array_slice(func_get_args(), 3) : []);
@@ -195,7 +196,7 @@ class Configurator
      * @return DeferredComponentClass
      * @codeCoverageIgnore
      */
-    public function call(string $componentClass, string $method, callable $callable = null)
+    public function call(string $componentClass, string $method, callable $callable = null): DeferredComponentClass
     {
         return call_user_func_array([$this, 'deferComponentClassMethod'], func_get_args());
     }
@@ -270,8 +271,7 @@ class Configurator
     public function enableDebugMode(): Configurator
     {
         $this->parameters['debugEnabled'] = true;
-        $this->parameters['debugMatch'] = (isset($this->parameters['debugMatch']) ? $this->parameters['debugMatch'] : true);
-
+        $this->parameters['debugMatch'] = $this->parameters['debugMatch'] ?? true;
         return $this;
     }
 
@@ -301,13 +301,11 @@ class Configurator
             return $this;
         }
 
-        // Otherwise we run the regular detectDebugMode from Tracy
+        // Otherwise, we run the regular detectDebugMode from Tracy
         $list = is_string($address)
             ? preg_split('#[,\s]+#', $address)
             : (array) $address;
-        $addr = isset($_SERVER['REMOTE_ADDR'])
-            ? $_SERVER['REMOTE_ADDR']
-            : php_uname('n');
+        $addr = $_SERVER['REMOTE_ADDR'] ?? php_uname('n');
         $secret = isset($_COOKIE[self::COOKIE_SECRET]) && is_string($_COOKIE[self::COOKIE_SECRET])
             ? $_COOKIE[self::COOKIE_SECRET]
             : NULL;
@@ -336,7 +334,7 @@ class Configurator
      * When issue #101 is completed, this should be resolved.
      *
      * @return Factory
-     * @throws \Exception
+     * @throws Exception
      */
     public function createContainer(): Factory
     {
@@ -345,7 +343,7 @@ class Configurator
         Core::$logDir = $this->parameters['logDir'];
 
         // Then prepare the debugger
-        $debug = ($this->parameters['debugEnabled'] && $this->parameters['debugMatch'] ? true : false);
+        $debug = $this->parameters['debugEnabled'] && $this->parameters['debugMatch'];
 
         // Then load the framework
         $container = Core::init();

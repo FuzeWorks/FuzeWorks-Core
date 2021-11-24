@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Events;
@@ -47,11 +47,11 @@ use FuzeWorks\Exception\LoggerException;
  */
 class loggerTest extends CoreTestAbstract
 {
-    protected $logger;
+    protected Logger $logger;
 
-    protected $output;
+    protected string $output;
 
-    public function setUp()
+    public function setUp(): void
     {
         Factory::getInstance()->config->get('error')->fuzeworks_error_reporting = false;
         Logger::$logs = array();
@@ -105,7 +105,7 @@ class loggerTest extends CoreTestAbstract
             E_STRICT => 'ERROR',
             E_RECOVERABLE_ERROR => 'ERROR',
             E_DEPRECATED => 'WARNING',
-            'UNKNOWN' => 'Unknown error: UNKNOWN'
+            0 => 'Unknown error: 0'
         );
 
         foreach ($types as $errorType => $output) {
@@ -211,7 +211,7 @@ class loggerTest extends CoreTestAbstract
         $this->assertFalse(Logger::isEnabled());
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\Event;
@@ -51,7 +51,7 @@ class HaltExecutionEvent extends Event
     /**
      * @var array Log
      */
-    public $log;
+    public array $log;
 
     public function init(array $log)
     {

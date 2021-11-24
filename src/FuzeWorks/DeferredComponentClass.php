@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -42,17 +42,17 @@ class DeferredComponentClass
     /**
      * @var string Name of the class to be invoked
      */
-    public $componentClass;
+    public string $componentClass;
 
     /**
      * @var string name of the method to be invoked
      */
-    public $method;
+    public string $method;
 
     /**
      * @var array arguments to invoke the method with
      */
-    public $arguments = [];
+    public array $arguments = [];
 
     /**
      * @var mixed return from the invoked method
@@ -62,7 +62,7 @@ class DeferredComponentClass
     /**
      * @var bool Whether the method has been invoked
      */
-    protected $invoked = false;
+    protected bool $invoked = false;
 
     /**
      * @var callable A callback to call when method has been invoked.

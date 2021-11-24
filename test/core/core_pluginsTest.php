@@ -31,10 +31,10 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.1.4
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
-use FuzeWorks\Core;
+use FuzeWorks\Exception\PluginException;
 use FuzeWorks\Factory;
 use FuzeWorks\Plugins;
 
@@ -50,9 +50,9 @@ class pluginTest extends CoreTestAbstract
     /**
      * @var FuzeWorks\Plugins
      */
-    protected $plugins;
+    protected Plugins $plugins;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->plugins = new Plugins();
         $this->plugins->init();
@@ -106,10 +106,10 @@ class pluginTest extends CoreTestAbstract
     /**
      * @depends testLoadPlugin
      * @covers ::get
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testMissingHeader()
     {
+        $this->expectException(PluginException::class);
         $this->plugins->get('testMissingHeader');
     }
 
@@ -134,39 +134,39 @@ class pluginTest extends CoreTestAbstract
     /**
      * @depends testLoadPlugin
      * @covers ::get
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testMissingPlugin()
     {
+        $this->expectException(PluginException::class);
         $this->plugins->get('testMissingPlugin');
     }
 
     /**
      * @depends testMissingPlugin
      * @covers ::get
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testLoadHeaderNotIPluginHeader()
     {
+        $this->expectException(PluginException::class);
         $this->plugins->get('TestLoadHeaderNotIPluginHeader');
     }
 
     /**
      * @depends testLoadPlugin
      * @covers ::get
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testInvalidClass()
     {
+        $this->expectException(PluginException::class);
         $this->plugins->get('testInvalidClass');
     }
 
     /**
      * @covers ::get
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testGetMissingName()
     {
+        $this->expectException(PluginException::class);
         $this->plugins->get('');
     }
 
@@ -174,12 +174,12 @@ class pluginTest extends CoreTestAbstract
      * @depends testLoadPlugin
      * @covers ::get
      * @covers ::loadHeadersFromPluginPaths
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testDisabledPlugin()
     {
         Factory::getInstance()->config->plugins->disabled_plugins = array('TestDisabledPlugin');
         $this->plugins->loadHeadersFromPluginPaths();
+        $this->expectException(PluginException::class);
         $this->plugins->get('testDisabledPlugin');
     }
 
@@ -187,16 +187,16 @@ class pluginTest extends CoreTestAbstract
      * @depends testLoadPlugin
      * @covers ::get
      * @covers ::loadHeadersFromPluginPaths
-     * @expectedException FuzeWorks\Exception\PluginException
      */
     public function testRunInvalidDirectory()
     {
         $this->plugins->addComponentPath('exists_not');
         $this->plugins->loadHeadersFromPluginPaths();
+        $this->expectException(PluginException::class);
         $this->plugins->get('testRunInvalidDirectory');
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

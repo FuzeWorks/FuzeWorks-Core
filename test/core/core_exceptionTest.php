@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Exception\Exception;
@@ -53,83 +53,63 @@ use FuzeWorks\Exception\ConfiguratorException;
 class exceptionTestTest extends CoreTestAbstract
 {
 
-    /**
-     * @expectedException FuzeWorks\Exception\Exception
-     */
     public function testException()
     {
+        $this->expectException(Exception::class);
         throw new Exception("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\CoreException
-     */
     public function testCoreException()
     {
+        $this->expectException(CoreException::class);
         throw new CoreException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\ConfigException
-     */
     public function testConfigException()
     {
+        $this->expectException(ConfigException::class);
         throw new ConfigException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\EventException
-     */
     public function testEventException()
     {
+        $this->expectException(EventException::class);
         throw new EventException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\FactoryException
-     */
     public function testFactoryException()
     {
+        $this->expectException(FactoryException::class);
         throw new FactoryException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\HelperException
-     */
     public function testHelperException()
     {
+        $this->expectException(HelperException::class);
         throw new HelperException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\InvalidArgumentException
-     */
     public function testInvalidArgumentException()
     {
+        $this->expectException(InvalidArgumentException::class);
         throw new InvalidArgumentException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\LibraryException
-     */
     public function testLibraryException()
     {
+        $this->expectException(LibraryException::class);
         throw new LibraryException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\LoggerException
-     */
     public function testLoggerException()
     {
+        $this->expectException(LoggerException::class);
         throw new LoggerException("Exception Test Run", 1);
     }
 
-    /**
-     * @expectedException FuzeWorks\Exception\ConfiguratorException
-     */
     public function testConfiguratorException()
     {
+        $this->expectException(ConfiguratorException::class);
         throw new ConfiguratorException("Exception Test Run", 1);
     }
 

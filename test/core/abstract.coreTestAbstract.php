@@ -31,14 +31,13 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 use PHPUnit\Framework\TestCase;
 use FuzeWorks\Events;
 use FuzeWorks\Factory;
 use FuzeWorks\Core;
 use FuzeWorks\Config;
-use FuzeWorks\LoggerTracyBridge;
 
 /**
  * Class CoreTestAbstract.
@@ -50,7 +49,7 @@ abstract class CoreTestAbstract extends TestCase
     /**
      * Reset multiple components to their original state before running the next test
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         // Clear all events created by tests
         Events::$listeners = [];

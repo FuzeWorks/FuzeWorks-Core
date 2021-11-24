@@ -10,7 +10,7 @@ https://techfuze.net/fuzeworks
 Summary
 -------
 
-FuzeWorks is a flexible PHP Framework made for the requirements of todays web.
+FuzeWorks is a flexible PHP Framework made for the requirements of today's web.
 For a summary of features, list of requirements, and installation instructions,
 please see the documentation in the ./doc/ folder or at http://techfuze.net/fuzeworks
 

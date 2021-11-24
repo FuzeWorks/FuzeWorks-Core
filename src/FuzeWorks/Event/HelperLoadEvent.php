@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\Event;
@@ -54,14 +54,14 @@ class HelperLoadEvent extends Event
      *
      * @var string
      */
-    public $helperName;
+    public string $helperName;
 
     /**
      * The directory of the helper that gets loaded
      *
      * @var array
      */
-    public $helperPaths;
+    public array $helperPaths;
 
 
     public function init(string $helperName, array $helperPaths)

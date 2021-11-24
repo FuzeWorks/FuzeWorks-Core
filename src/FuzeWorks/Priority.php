@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -90,22 +90,22 @@ abstract class Priority
 
     /**
      * Returns the highest priority
-     * This function is needed for executing in the right order,.
+     * This function is needed for executing in the right order.
      *
      * @return int
      */
-    public static function getHighestPriority()
+    public static function getHighestPriority(): int
     {
         return self::MONITOR;
     }
 
     /**
      * Returns the lowest priority
-     * This function is needed for executing in the right order,.
+     * This function is needed for executing in the right order.
      *
      * @return int
      */
-    public static function getLowestPriority()
+    public static function getLowestPriority(): int
     {
         return self::LOWEST;
     }

@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Factory;
@@ -73,10 +73,10 @@ class factoryTest extends CoreTestAbstract
     /**
      * @depends testGetInstance
      * @covers ::getInstance
-     * @expectedException \FuzeWorks\Exception\FactoryException
      */
     public function testGetInstanceNotFound()
     {
+        $this->expectException(FactoryException::class);
         Factory::getInstance('NotFound');
     }
 
@@ -183,7 +183,6 @@ class factoryTest extends CoreTestAbstract
     /**
      * @depends testCanLoadFactory
      * @covers ::cloneInstance
-     * @expectedException FuzeWorks\Exception\FactoryException
      */
     public function testCloneInstanceWrongClassname()
     {
@@ -191,6 +190,7 @@ class factoryTest extends CoreTestAbstract
         $factory = new Factory;
 
         // Attempt
+        $this->expectException(FactoryException::class);
         $factory->cloneInstance('fake');
     }
 
@@ -223,7 +223,6 @@ class factoryTest extends CoreTestAbstract
     /**
      * @depends testNewFactoryInstance
      * @covers ::newInstance
-     * @expectedException FuzeWorks\Exception\FactoryException
      */
     public function testFactoryNewInstanceNotExist()
     {
@@ -231,13 +230,13 @@ class factoryTest extends CoreTestAbstract
         $factory = new Factory;
 
         // First, it does not exist
+        $this->expectException(FactoryException::class);
         $factory->newInstance('fake');
     }
 
     /**
      * @depends testNewFactoryInstance
      * @covers ::newInstance
-     * @expectedException FuzeWorks\Exception\FactoryException
      */
     public function testFactoryNewInstanceWrongNamespace()
     {
@@ -245,6 +244,7 @@ class factoryTest extends CoreTestAbstract
         $factory = new Factory;
 
         // Second, it just fails
+        $this->expectException(FactoryException::class);
         $factory->newInstance('helpers', 'Test\\');
     }
 
@@ -278,7 +278,6 @@ class factoryTest extends CoreTestAbstract
     /**
      * @depends testRemoveInstance
      * @covers ::removeInstance
-     * @expectedException FuzeWorks\Exception\FactoryException
      */
     public function testRemoveInstanceNotExist()
     {
@@ -286,6 +285,7 @@ class factoryTest extends CoreTestAbstract
         $factory = new Factory;
 
         // Test
+        $this->expectException(FactoryException::class);
         $factory->removeInstance('fake');
     }
 
@@ -308,7 +308,7 @@ class factoryTest extends CoreTestAbstract
         $this->assertEquals(5, $factory->test);
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

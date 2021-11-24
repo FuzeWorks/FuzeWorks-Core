@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Priority;
@@ -50,9 +50,9 @@ class helperTest extends CoreTestAbstract
     /**
      * @var Helpers
      */
-	protected $helpers;
+	protected Helpers $helpers;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		// Prepare class
 	    $this->helpers = new Helpers();

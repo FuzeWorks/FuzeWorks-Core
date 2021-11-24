@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 namespace FuzeWorks\Component;
 use FuzeWorks\ComponentPathsTrait;
@@ -47,12 +47,12 @@ class TestAddComponentDirectoryComponent implements iComponent
         return ['testaddcomponentdirectory' => 'FuzeWorks\Component\TestAddComponentDirectory'];
     }
 
-    public function onAddComponent(Configurator $configurator)
+    public function onAddComponent(Configurator $configurator): Configurator
     {
         return $configurator;
     }
 
-    public function onCreateContainer(Factory $container)
+    public function onCreateContainer(Factory $container): Factory
     {
         return $container;
     }
@@ -67,5 +67,5 @@ class TestAddComponentDirectory
 {
     use ComponentPathsTrait;
 
-    public $variable = 5;
+    public int $variable = 5;
 }

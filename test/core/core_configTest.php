@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 use FuzeWorks\Config;
 use FuzeWorks\Event\ConfigGetEvent;
+use FuzeWorks\Exception\ConfigException;
 use FuzeWorks\Priority;
 use FuzeWorks\Events;
 
@@ -51,9 +52,9 @@ class configTest extends CoreTestAbstract
     /**
      * @var Config
      */
-	protected $config;
+	protected Config $config;
 
-	public function setUp()
+	public function setUp(): void
 	{
 		$this->config = new Config();
 	}
@@ -90,10 +91,10 @@ class configTest extends CoreTestAbstract
 	/**
 	 * @depends testLoadConfig
      * @covers ::loadConfigFile
-	 * @expectedException FuzeWorks\Exception\ConfigException
 	 */
 	public function testFileNotFound()
 	{
+	    $this->expectException(ConfigException::class);
 		$this->config->getConfig('notFound');
 	}
 
@@ -183,11 +184,11 @@ class configTest extends CoreTestAbstract
         $this->assertSame($config, $config2);
 
         // First test the existing key
-        $this->assertEquals($config->key, 'value');
+        $this->assertEquals('value', $config->key);
 
         // Change it and test if it's different now
         $config->key = 'other_value';
-        $this->assertEquals($config2->key, 'other_value');
+        $this->assertEquals('other_value', $config2->key);
     }
 
     /**

@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -40,7 +40,6 @@ use FuzeWorks\Exception\ConfigException;
 use FuzeWorks\Exception\CoreException;
 use FuzeWorks\Exception\LibraryException;
 use ReflectionClass;
-use ReflectionException;
 
 class Libraries
 {
@@ -51,14 +50,14 @@ class Libraries
      *
      * @var array Library objects
      */
-    protected $libraryObjects = [];
+    protected array $libraryObjects = [];
 
     /**
      * Array of libraries with their classnames, so they can be easily loaded
      *
      * @var array Library classes
      */
-    protected $libraryClasses = [];
+    protected array $libraryClasses = [];
 
     /**
      * FuzeWorks Factory object. For internal use.
@@ -83,7 +82,7 @@ class Libraries
      * @param string $libraryName
      * @param object $libraryObject
      */
-    public function addLibraryObject(string $libraryName, $libraryObject)
+    public function addLibraryObject(string $libraryName, object $libraryObject)
     {
         $this->libraryObjects[strtolower($libraryName)] = $libraryObject;
     }
@@ -213,8 +212,6 @@ class Libraries
             $prefix = $classObject->getClassesPrefix();
             if (!is_null($filePath) && !is_null($prefix))
                 Core::addAutoloadMap($prefix, $filePath);
-        } catch (ReflectionException $e) {
-            throw new LibraryException("Could not initiate library. ReflectionClass threw exception.");
         } catch (CoreException $e) {
             throw new LibraryException("Could not initiate library. Failed to add to autoloader.");
         }

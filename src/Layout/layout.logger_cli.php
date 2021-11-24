@@ -31,11 +31,12 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 1.2.0
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 if (!function_exists('getColoredString'))
 {
-    function getColoredString($string, $foreground_color, $background_color) {
+    function getColoredString($string, $foreground_color, $background_color): string
+    {
 
         // Determine the color system
         $foreground_colors = array();

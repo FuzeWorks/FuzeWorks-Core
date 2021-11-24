@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks;
@@ -46,7 +46,7 @@ namespace FuzeWorks;
  */
 class Event
 {
-    private $cancelled = false;
+    private bool $cancelled = false;
 
     /**
      * @return bool True if the event is cancelled, false if the event is not cancelled
@@ -59,7 +59,7 @@ class Event
     /**
      * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
      */
-    public function setCancelled($cancelled)
+    public function setCancelled(bool $cancelled)
     {
         if ($cancelled == true) {
             $this->cancelled = true;

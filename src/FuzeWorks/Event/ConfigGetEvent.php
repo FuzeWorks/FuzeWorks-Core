@@ -31,7 +31,7 @@
  * @link  http://techfuze.net/fuzeworks
  * @since Version 0.0.1
  *
- * @version Version 1.2.0
+ * @version Version 1.3.0
  */
 
 namespace FuzeWorks\Event;
@@ -54,14 +54,14 @@ class ConfigGetEvent extends Event
      *
      * @var string
      */
-    public $configName;
+    public string $configName;
 
     /**
      * The directories the config might be found in
      *
      * @var array
      */
-    public $configPaths;
+    public array $configPaths;
 
 
     public function init(string $configName, array $configPaths)
