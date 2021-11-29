@@ -404,6 +404,10 @@ class Configurator
                 $container->{$component}->setDirectories($priorityArray);
         }
 
+        // And add the fallback directory
+        $container->config->addComponentPath(Core::$coreDir . DS . 'Config', Priority::LOWEST);
+
+        // Initialize and return the container
         $container->initFactory();
         Logger::stopLevel();
         return $container;

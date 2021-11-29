@@ -52,6 +52,10 @@ class Config
 {
     use ComponentPathsTrait;
 
+    public function __construct() {
+        $this->addComponentPath(Core::$coreDir . DS . 'Config', Priority::LOWEST);
+    }
+
     /**
      * Array where all config files are saved while FuzeWorks runs
      * 
@@ -150,6 +154,7 @@ class Config
             return new ConfigORM();
 
         // Cycle through all priorities if they exist
+        $configORM = new ConfigORM();
         for ($i=Priority::getHighestPriority(); $i<=Priority::getLowestPriority(); $i++)
         {
             if (!isset($event->configPaths[$i]))
@@ -161,40 +166,22 @@ class Config
                 // If file exists, load it and break the loop
                 $file = $configPath . DS . 'config.'.strtolower($event->configName).'.php';
                 if (file_exists($file))
-                {
-                    // Load object
-                    $configORM = (new ConfigORM())->load($file);
-
-                    // Override config values if they exist
-                    if (isset(self::$configOverrides[$event->configName]))
-                    {
-                        foreach (self::$configOverrides[$event->configName] as $configKey => $configValue)
-                            $configORM->{$configKey} = $configValue;
-                    }
-
-                    // Return object
-                    return $configORM;
-                }
+                    $configORM->addFile($i, $file);
             }
         }
 
-        // Try fallback
-        $file = Core::$coreDir . DS . 'Config' . DS . 'config.' . $event->configName . '.php';
-        if (file_exists($file))
+        // And initialize the ORM
+        $configORM->init();
+
+        // Override config values if they exist
+        if (isset(self::$configOverrides[$event->configName]))
         {
-            // Load object
-            $configORM = (new ConfigORM())->load($file);
-
-            // Override config values if they exist
-            if (isset(self::$configOverrides[$event->configName]))
-            {
-                foreach (self::$configOverrides[$event->configName] as $configKey => $configValue)
-                    $configORM->{$configKey} = $configValue;
-            }
-
-            // Return object
-            return $configORM;
+            foreach (self::$configOverrides[$event->configName] as $configKey => $configValue)
+                $configORM->{$configKey} = $configValue;
         }
+
+        if ($configORM->loaded)
+            return $configORM;
 
         throw new ConfigException("Could not load config. File $event->configName not found", 1);
     }

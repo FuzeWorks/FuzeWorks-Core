@@ -207,4 +207,27 @@ class configTest extends CoreTestAbstract
         $this->assertEquals('somethingDefault', $config->get('otherKey'));
     }
 
+    /**
+     * @covers ::loadConfigFile
+     * @depends testLoadConfigCoreOverride
+     */
+    public function testCumulativeConfigFile()
+    {
+        // Add folders
+        $this->config->addComponentPath('test'.DS.'config'.DS.'TestCumulativeConfigFile'.DS.'HighPriorityFolder', Priority::HIGH);
+        $this->config->addComponentPath('test'.DS.'config'.DS.'TestCumulativeConfigFile'.DS.'LowPriorityFolder', Priority::LOW);
+
+        // And override a value
+        Config::overrideConfig('cumulative', 'override', 'secondValue');
+
+        // Load the config
+        $config = $this->config->get('cumulative');
+
+        // Check values
+        $this->assertEquals("world", $config->get('first'));
+        $this->assertEquals("highValue", $config->get('onlyInHigh'));
+        $this->assertEquals("lowValue", $config->get('onlyInLow'));
+        $this->assertEquals("secondValue", $config->get('override'));
+    }
+
 }
