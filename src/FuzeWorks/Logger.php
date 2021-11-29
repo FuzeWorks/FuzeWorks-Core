@@ -38,7 +38,7 @@ namespace FuzeWorks;
 
 use FuzeWorks\Exception\ConfigException;
 use FuzeWorks\Exception\EventException;
-use FuzeWorks\Exception\Exception;
+use Exception;
 
 /**
  * Logger Class.
