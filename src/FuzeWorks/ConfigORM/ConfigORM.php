@@ -36,6 +36,7 @@
 
 namespace FuzeWorks\ConfigORM;
 use FuzeWorks\Exception\ConfigException;
+use FuzeWorks\Priority;
 
 /**
  * ORM class for config files in PHP files.
@@ -48,37 +49,61 @@ use FuzeWorks\Exception\ConfigException;
 class ConfigORM extends ConfigORMAbstract
 {
     /**
-     * The current filename.
+     * The path to the highest priority filename.
      *
      * @var string filename
      */
-    private string $file;
+    protected string $file;
 
     /**
-     * Load the ConfigORM file.
+     * Files the ConfigORM is built on
      *
-     * @param string $file
-     * @return ConfigORM
-     * @throws ConfigException
+     * @var array files
      */
-    public function load(string $file = ''): ConfigORM
+    protected array $files = [];
+
+    /**
+     * Whether the ConfigORM is loaded or not.
+     *
+     * @var bool
+     */
+    public bool $loaded = false;
+
+    public function addFile(int $priority, string $file)
     {
-        if (empty($file))
-        {
-            throw new ConfigException('Could not load config file. No file provided', 1);
-        }
-        elseif (file_exists($file))
-        {
-            $this->file = $file;
-            $this->cfg = (array) include $file;
-            $this->originalCfg = $this->cfg;
-        }
-        else
-        {
-            throw new ConfigException('Could not load config file. Config file does not exist', 1);
+        if (!isset($this->files[$priority]))
+            $this->files[$priority] = [];
+
+        $this->files[$priority][] = $file;
+    }
+
+    public function init()
+    {
+        // Set cfg
+        $this->cfg = [];
+
+        for ($i = Priority::getLowestPriority(); $i >= Priority::getHighestPriority(); $i--) {
+
+            // If priority does not exist for this file, skip it
+            if (!isset($this->files[$i]))
+                continue;
+
+            // Pass over each file in this priority
+            foreach ($this->files[$i] as $file) {
+                // Read the contents
+                $contents = (array) include $file;
+
+                // Merge them with the config as we know it
+                $this->cfg = array_replace_recursive($this->cfg, $contents);
+
+                // And save the last file that we found (with the highest priority)
+                $this->file = $file;
+                $this->loaded = true;
+            }
         }
 
-        return $this;
+        // When done, save originalCfg
+        $this->originalCfg = $this->cfg;
     }
 
     /**
