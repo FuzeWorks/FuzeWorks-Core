@@ -20,6 +20,12 @@ steps:
       - docker-php-ext-enable xdebug
       - vendor/bin/phpunit -c test/phpunit.xml
 
+  - name: php81test
+    image: registry.i15.nl/i15/fuzephp:8.1-alpine
+    commands:
+      - docker-php-ext-enable xdebug
+      - vendor/bin/phpunit -c test/phpunit.xml
+
   - name: coverage
     image: registry.i15.nl/i15/fuzephp:8.0-alpine
     commands:

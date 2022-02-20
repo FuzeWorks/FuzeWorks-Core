@@ -36,9 +36,10 @@
 
 namespace FuzeWorks;
 
+use Exception;
 use FuzeWorks\Exception\ConfigException;
 use FuzeWorks\Exception\EventException;
-use Exception;
+use Throwable;
 
 /**
  * Logger Class.
@@ -279,20 +280,21 @@ class Logger {
 
     /**
      * Exception handler
-     * Will be triggered when an uncaught exception occures. This function shows the error-message, and shuts down the script.
+     * Will be triggered when an uncaught exception occurs. This function shows the error-message, and shuts down the script.
      * Please note that most of the user-defined exceptions will be caught in the router, and handled with the error-controller.
      *
-     * @param Exception $exception The occured exception.
+     * @param Throwable $exception The occurred exception.
      * @param bool $haltExecution. Defaults to true
      */
-    public static function exceptionHandler(Exception $exception, bool $haltExecution = true)
+    public static function exceptionHandler(Throwable $exception, bool $haltExecution = true)
     {
-        $LOG = array('type' => 'EXCEPTION',
+        $LOG = [
+            'type' => $exception instanceof Exception ? "EXCEPTION" : "ERROR",
             'message' => $exception->getMessage(),
             'logFile' => $exception->getFile(),
             'logLine' => $exception->getLine(),
             'context' => $exception->getTraceAsString(),
-            'runtime' => round(self::getRelativeTime(), 4),);
+            'runtime' => round(self::getRelativeTime(), 4),];
         self::$logs[] = $LOG;
 
         // And return a 500 because this error was fatal

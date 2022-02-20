@@ -135,10 +135,30 @@ class loggerTest extends CoreTestAbstract
         Events::addListener(function($event){
             $event->setCancelled(true);
             $this->assertEquals('FAILURE', $event->log['message']);
+            $this->assertEquals("EXCEPTION", $event->log['type']);
         }, 'haltExecutionEvent');
 
         // Log the exception
         Logger::exceptionHandler($exception);
+    }
+
+    /**
+     * @covers ::exceptionHandler
+     * @depends testExceptionHandler
+     */
+    public function testErrorsToExceptionHandler()
+    {
+        // Create the error
+        $error = new ParseError("FAILURE_ERROR");
+
+        // Prepare to intercept
+        Events::addListener(function ($event) {
+            $event->setCancelled(true);
+            $this->assertEquals("FAILURE_ERROR", $event->log['message']);
+            $this->assertEquals("ERROR", $event->log['type']);
+        }, 'haltExecutionEvent');
+
+        Logger::exceptionHandler($error);
     }
 
     /**
