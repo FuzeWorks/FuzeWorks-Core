@@ -118,7 +118,7 @@ class Core
         register_shutdown_function(array('\FuzeWorks\Core', 'shutdown'));
         set_error_handler(array('\FuzeWorks\Core', 'errorHandler'), E_ALL);
         set_exception_handler(array('\FuzeWorks\Core', 'exceptionHandler'));
-        spl_autoload_register(['\FuzeWorks\Core', 'autoloader'], true,false);
+        spl_autoload_register(['\FuzeWorks\Core', 'autoloader']);
 
         // Return the Factory
         return new Factory();
@@ -130,7 +130,7 @@ class Core
      * Afterwards run the Logger shutdown function in order to possibly display the log
      * @throws EventException
      */
-    public static function shutdown()
+    public static function shutdown(): void
     {
         // Fix Apache bug where CWD is changed upon shutdown
         chdir(self::$cwd);
@@ -154,9 +154,9 @@ class Core
      *
      * @param string $varName
      * @param string|null $default
-     * @return array|string|null
+     * @return string|null
      */
-    public static function getEnv(string $varName, string $default = null)
+    public static function getEnv(string $varName, string $default = null): string|null
     {
         // First retrieve the environment variable
         $var = getenv($varName);
@@ -172,10 +172,10 @@ class Core
     /**
      * Checks whether the current running version of PHP is equal to the input string.
      *
-     * @param   string
+     * @param  string $version
      * @return  bool    true if running higher than input string
      */
-    public static function isPHP($version): bool
+    public static function isPHP(string $version): bool
     {
         static $_is_php;
         $version = (string) $version;
@@ -188,7 +188,7 @@ class Core
         return $_is_php[$version];
     }
 
-    public static function exceptionHandler()
+    public static function exceptionHandler(): void
     {
         for ($i = Priority::getHighestPriority(); $i <= Priority::getLowestPriority(); $i++)
         {
@@ -200,7 +200,7 @@ class Core
         }
     }
 
-    public static function errorHandler()
+    public static function errorHandler(): void
     {
         for ($i = Priority::getHighestPriority(); $i <= Priority::getLowestPriority(); $i++)
         {
@@ -218,7 +218,7 @@ class Core
      * @param callable $callback
      * @param int $priority
      */
-    public static function addExceptionHandler(callable $callback, int $priority = Priority::NORMAL)
+    public static function addExceptionHandler(callable $callback, int $priority = Priority::NORMAL): void
     {
         if (!isset(self::$exceptionHandlers[$priority]))
             self::$exceptionHandlers[$priority] = [];
@@ -233,7 +233,7 @@ class Core
      * @param callable $callback
      * @param int $priority
      */
-    public static function removeExceptionHandler(callable $callback, int $priority = Priority::NORMAL)
+    public static function removeExceptionHandler(callable $callback, int $priority = Priority::NORMAL): void
     {
         if (isset(self::$exceptionHandlers[$priority]) && in_array($callback, self::$exceptionHandlers[$priority]))
         {
@@ -249,7 +249,7 @@ class Core
      * @param callable $callback
      * @param int $priority
      */
-    public static function addErrorHandler(callable $callback, int $priority = Priority::NORMAL)
+    public static function addErrorHandler(callable $callback, int $priority = Priority::NORMAL): void
     {
         if (!isset(self::$errorHandlers[$priority]))
             self::$errorHandlers[$priority] = [];
@@ -264,7 +264,7 @@ class Core
      * @param callable $callback
      * @param int $priority
      */
-    public static function removeErrorHandler(callable $callback, int $priority = Priority::NORMAL)
+    public static function removeErrorHandler(callable $callback, int $priority = Priority::NORMAL): void
     {
         if (isset(self::$errorHandlers[$priority]) && in_array($callback, self::$errorHandlers[$priority]))
         {
@@ -279,7 +279,7 @@ class Core
      * @param string $filePath
      * @throws CoreException
      */
-    public static function addAutoloadMap(string $nameSpacePrefix, string $filePath)
+    public static function addAutoloadMap(string $nameSpacePrefix, string $filePath): void
     {
         // Remove leading slashes
         $nameSpacePrefix = ltrim($nameSpacePrefix, '\\');
@@ -293,7 +293,7 @@ class Core
         self::$autoloadMap[$nameSpacePrefix] = $filePath;
     }
 
-    public static function autoloader(string $class)
+    public static function autoloader(string $class): void
     {
         // Remove leading slashes
         $class = ltrim($class, '\\');
@@ -302,7 +302,7 @@ class Core
         foreach (self::$autoloadMap as $prefix => $path)
         {
             // If not, try next
-            if (strpos($class, $prefix) === false)
+            if (!str_contains($class, $prefix))
                 continue;
 
             // If it contains the prefix, attempt to find the file
@@ -319,7 +319,7 @@ class Core
      * Not intended for use by developer. Only for use during testing
      * @internal
      */
-    public static function clearAutoloader()
+    public static function clearAutoloader(): void
     {
         self::$autoloadMap = [];
     }
@@ -332,16 +332,14 @@ class Core
      * on Unix servers if safe_mode is on.
      *
      * @link    https://bugs.php.net/bug.php?id=54709
-     * @param   string
+     * @param   string $file
      * @return  bool
      */
-    public static function isReallyWritable($file): bool
+    public static function isReallyWritable(string $file): bool
     {
         // If we're on a Unix server with safe_mode off we call is_writable
         if (DIRECTORY_SEPARATOR === '/' && ! ini_get('safe_mode'))
-        {
             return is_writable($file);
-        }
 
         /* For Windows servers and safe_mode "on" installations we'll actually
          * write a file then read it. Bah...
@@ -360,9 +358,7 @@ class Core
             return TRUE;
         }
         elseif ( ! is_file($file) OR ($fp = @fopen($file, 'ab')) === FALSE)
-        {
             return FALSE;
-        }
 
         fclose($fp);
         return TRUE;

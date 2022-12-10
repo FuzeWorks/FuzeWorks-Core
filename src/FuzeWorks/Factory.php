@@ -158,7 +158,7 @@ class Factory
         // Load the config file of the FuzeWorks core
         try {
             $cfg = $this->config->get('core');
-        } catch (ConfigException $e) {
+        } catch (ConfigException) {
             throw new CoreException("Could not initiate Factory. Config 'core' could not be found.");
         }
 
@@ -199,7 +199,7 @@ class Factory
      * @return mixed
      * @throws FactoryException
      */
-	public static function getInstance(string $instanceName = null)
+	public static function getInstance(string $instanceName = null): mixed
     {
 	    if (is_null($instanceName))
 	        return self::$sharedFactoryInstance;
@@ -258,8 +258,8 @@ class Factory
      * @return mixed
      * @throws FactoryException
      */
-	public static function cloneInstance(string $className, bool $onlyReturn = false)
-	{
+	public static function cloneInstance(string $className, bool $onlyReturn = false): mixed
+    {
 		// Determine the class to load
 		$instanceName = strtolower($className);
 
@@ -284,7 +284,7 @@ class Factory
 	 * @param mixed  $object    Object to replace the class with
 	 * @return Factory Instance
 	 */
-	public function setInstance(string $objectName, $object): self
+	public function setInstance(string $objectName, mixed $object): self
 	{
 		// Determine the instance name
 		$instanceName = strtolower($objectName);

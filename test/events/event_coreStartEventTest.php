@@ -57,5 +57,5 @@ class coreStartEventTest extends CoreTestAbstract
 }
 
 class MockStartEvent {
-    public function mockMethod() {}
+    public function mockMethod(): void {}
 }

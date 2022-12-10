@@ -36,6 +36,7 @@
 
 use FuzeWorks\Exception\LibraryException;
 use FuzeWorks\Factory;
+use FuzeWorks\iLibrary;
 use FuzeWorks\Libraries;
 
 /**
@@ -167,10 +168,10 @@ class libraryTest extends CoreTestAbstract
      */
     public function testAddLibraryObject()
     {
-        $z = new stdClass();
-        $this->libraries->addLibraryObject('TestAddLibraryObject', $z);
+        $lib = $this->getMockForAbstractClass(iLibrary::class);
+        $this->libraries->addLibraryObject('TestAddLibraryObject', $lib);
 
-        $this->assertEquals($z, $this->libraries->get('TestAddLibraryObject'));
+        $this->assertEquals($lib, $this->libraries->get('TestAddLibraryObject'));
     }
 
     /**
@@ -203,13 +204,13 @@ class libraryTest extends CoreTestAbstract
     public function testAddLibraryWithAutoloader()
     {
         // First assert the extra class can't be autoloaded
-        $this->assertFalse(class_exists('FuzeWorks\Test\TestAddLibraryWithAutoloader\SomeExtraClass', true));
+        $this->assertFalse(class_exists('FuzeWorks\Test\TestAddLibraryWithAutoloader\SomeExtraClass'));
 
         // Load the library and test the instance type
         $this->assertInstanceOf('Application\Library\TestAddLibraryWithAutoloader', $this->libraries->get('TestAddLibraryWithAutoloader'));
 
         // Afterwards test if the loader has been correctly added
-        $this->assertTrue(class_exists('FuzeWorks\Test\TestAddLibraryWithAutoloader\SomeExtraClass', true));
+        $this->assertTrue(class_exists('FuzeWorks\Test\TestAddLibraryWithAutoloader\SomeExtraClass'));
     }
 
     /**

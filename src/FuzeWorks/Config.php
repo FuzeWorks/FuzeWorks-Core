@@ -124,7 +124,7 @@ class Config
     /**
      * Clears all the config files and discards all changes not committed
      */
-    public function discardConfigFiles()
+    public function discardConfigFiles(): void
     {
         $this->cfg = [];
     }
@@ -195,7 +195,7 @@ class Config
      * @param string $configKey
      * @param $configValue
      */
-    public static function overrideConfig(string $configName, string $configKey, $configValue)
+    public static function overrideConfig(string $configName, string $configKey, $configValue): void
     {
         // Convert configName
         $configName = strtolower($configName);

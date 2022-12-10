@@ -122,7 +122,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @return mixed Value of the requested entry
      * @codeCoverageIgnore
      */
-    public function get(string $name)
+    public function get(string $name): mixed
     {
         return $this->cfg[$name];
     }
@@ -134,7 +134,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @param mixed  $value Value of the entry
      * @codeCoverageIgnore
      */
-    public function __set(string $name, $value)
+    public function __set(string $name, mixed $value)
     {
         $this->cfg[$name] = $value;
     }
@@ -146,7 +146,7 @@ abstract class ConfigORMAbstract implements Iterator
      * @param mixed  $value Value of the entry
      * @codeCoverageIgnore
      */
-    public function set(string $name, $value)
+    public function set(string $name, mixed $value)
     {
         $this->cfg[$name] = $value;
     }
@@ -154,10 +154,10 @@ abstract class ConfigORMAbstract implements Iterator
     /**
      * Unset a value in a config file.
      *
-     * @param string Key of the entry
+     * @param string $name Key of the entry
      * @codeCoverageIgnore
      */
-    public function __unset($name)
+    public function __unset(string $name)
     {
         unset($this->cfg[$name]);
     }
@@ -166,16 +166,16 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function rewind()
+    public function rewind(): void
     {
-        return reset($this->cfg);
+        reset($this->cfg);
     }
 
     /**
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->cfg);
     }
@@ -184,7 +184,7 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function key()
+    public function key(): string|int|null
     {
         return key($this->cfg);
     }
@@ -193,9 +193,9 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->cfg);
+        next($this->cfg);
     }
 
     /**

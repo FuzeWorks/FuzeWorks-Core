@@ -38,7 +38,7 @@ use FuzeWorks\iLibrary;
 
 class TestGetLibraryParametersFromConfig implements iLibrary {
 
-	public $parameters;
+	public mixed $parameters;
 
 	public function __construct($parameters)
 	{

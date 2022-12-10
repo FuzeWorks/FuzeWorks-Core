@@ -52,7 +52,7 @@ trait ComponentPathsTrait
      *
      * @param array $componentPaths
      */
-    public function setDirectories(array $componentPaths)
+    public function setDirectories(array $componentPaths): void
     {
         $this->componentPaths = $componentPaths;
     }
@@ -63,7 +63,7 @@ trait ComponentPathsTrait
      * @param string $componentPath
      * @param int $priority
      */
-    public function addComponentPath(string $componentPath, int $priority = Priority::NORMAL)
+    public function addComponentPath(string $componentPath, int $priority = Priority::NORMAL): void
     {
         if (!isset($this->componentPaths[$priority]))
             $this->componentPaths[$priority] = [];
@@ -78,7 +78,7 @@ trait ComponentPathsTrait
      * @param string $componentPath
      * @param int $priority
      */
-    public function removeComponentPath(string $componentPath, int $priority = Priority::NORMAL)
+    public function removeComponentPath(string $componentPath, int $priority = Priority::NORMAL): void
     {
         if (!isset($this->componentPaths[$priority]))
             return;

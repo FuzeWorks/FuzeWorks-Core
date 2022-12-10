@@ -66,14 +66,14 @@ class Events
      *
      * @var array
      */
-    public static array $listeners = array();
+    public static array $listeners = [];
 
     /**
      * Whether the event system is enabled or not.
      *
-     * @var array
+     * @var bool
      */
-    private static $enabled = true;
+    private static bool $enabled = true;
 
     /**
      * Adds a function as listener.
@@ -87,33 +87,25 @@ class Events
      *
      * @throws EventException
      */
-    public static function addListener(callable $callback, string $eventName, int $priority = Priority::NORMAL)
+    public static function addListener(callable $callback, string $eventName, int $priority = Priority::NORMAL): void
     {
         // Perform multiple checks
-        if (Priority::getPriority($priority) == false) {
+        if (!Priority::getPriority($priority))
             throw new EventException('Can not add listener: Unknown priority '.$priority, 1);
-        }
 
         if (empty($eventName))
-        {
-            throw new EventException("Can not add listener: No eventname provided", 1);
-        }
+            throw new EventException("Can not add listener: No event name provided", 1);
 
-        if (!isset(self::$listeners[$eventName])) {
+        if (!isset(self::$listeners[$eventName]))
             self::$listeners[$eventName] = array();
-        }
 
-        if (!isset(self::$listeners[$eventName][$priority])) {
+        if (!isset(self::$listeners[$eventName][$priority]))
             self::$listeners[$eventName][$priority] = array();
-        }
 
-        if (func_num_args() > 3) {
+        if (func_num_args() > 3)
             $args = array_slice(func_get_args(), 3);
-        }
         else
-        {
             $args = array();
-        }
 
         self::$listeners[$eventName][$priority][] = array($callback, $args);
     }
@@ -121,7 +113,7 @@ class Events
     /**
      * Removes a function as listener.
      *
-     * @param mixed callback The callback when the events get fired, see {@link http://php.net/manual/en/language.types.callable.php PHP.net}
+     * @param callable $callback The callback when the events get fired, see {@link http://php.net/manual/en/language.types.callable.php PHP.net}
      * @param string $eventName The name of the event
      * @param int $priority  The priority, even though integers are valid, please use Priority (for example Priority::Lowest)
      *
@@ -129,15 +121,13 @@ class Events
      *
      * @throws EventException
      */
-    public static function removeListener(callable $callback, string $eventName, int $priority = Priority::NORMAL)
+    public static function removeListener(callable $callback, string $eventName, int $priority = Priority::NORMAL): void
     {
-        if (Priority::getPriority($priority) == false) {
+        if (!Priority::getPriority($priority))
             throw new EventException('Unknown priority '.$priority);
-        }
 
-        if (!isset(self::$listeners[$eventName]) || !isset(self::$listeners[$eventName][$priority])) {
+        if (!isset(self::$listeners[$eventName]) || !isset(self::$listeners[$eventName][$priority]))
             return;
-        }
 
         foreach (self::$listeners[$eventName][$priority] as $i => $_callback) {
             if ($_callback[0] == $callback) {
@@ -159,7 +149,7 @@ class Events
      * @return Event The Event
      * @throws EventException
      */
-    public static function fireEvent($input): Event
+    public static function fireEvent(mixed $input): Event
     {
         // First try and see if the object is an Event
         if (is_object($input))
@@ -176,13 +166,11 @@ class Events
             $eventName = $input;
 
             // Try a direct class
-            if (class_exists($eventClass, true))
-            {
+            if (class_exists($eventClass))
                 $event = new $eventClass();
-            }
 
             // Try a core event
-            elseif (class_exists("\FuzeWorks\Event\\".$eventClass, true))
+            elseif (class_exists("\FuzeWorks\Event\\".$eventClass))
             {
                 $class = "\FuzeWorks\Event\\".$eventClass;
                 $event = new $class();
@@ -190,29 +178,23 @@ class Events
 
             // Try a notifier event
             elseif (func_num_args() == 1)
-            {
                 $event = new NotifierEvent();
-            }
 
             // Or throw an exception on failure
             else
-            {
                 throw new EventException('Event '.$eventName.' could not be found!', 1);
-            }
         }
         else
         {
             throw new EventException('Event could not be loaded. Invalid variable provided.', 1);
         }
 
-        if (func_num_args() > 1) {
+        if (func_num_args() > 1)
             call_user_func_array(array($event, 'init'), array_slice(func_get_args(), 1));
-        }
 
         // Do not run if the event system is disabled
-        if (!self::$enabled) {
+        if (!self::$enabled)
             return $event;
-        }
 
         //There are listeners for this event
         if (isset(self::$listeners[$eventName])) {
@@ -257,7 +239,7 @@ class Events
     /**
      * Enables the event system.
      */
-    public static function enable()
+    public static function enable(): void
     {
         Logger::log('Enabled the Event system');
         self::$enabled = true;
@@ -266,7 +248,7 @@ class Events
     /**
      * Disables the event system.
      */
-    public static function disable()
+    public static function disable(): void
     {
         Logger::log('Disabled the Event system');
         self::$enabled = false;

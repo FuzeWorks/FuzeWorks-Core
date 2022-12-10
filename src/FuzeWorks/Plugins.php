@@ -94,16 +94,16 @@ class Plugins
      * @throws FactoryException
      * @codeCoverageIgnore
      */
-	public function init()
-	{
+	public function init(): void
+    {
 		$this->cfg = Factory::getInstance()->config->getConfig('plugins');
 	}
 
     /**
      * Load the header files of all plugins. 
      */
-	public function loadHeadersFromPluginPaths()
-	{
+	public function loadHeadersFromPluginPaths(): void
+    {
 		// Cycle through all pluginPaths
         for ($i=Priority::getHighestPriority(); $i<=Priority::getLowestPriority(); $i++)
         {
@@ -197,7 +197,7 @@ class Plugins
      * @throws Exception\EventException
      * @throws PluginException
      */
-	public function get(string $pluginName, array $parameters = null)
+	public function get(string $pluginName, array $parameters = null): mixed
 	{
 		if (empty($pluginName))
 			throw new PluginException("Could not load plugin. No name provided", 1);
@@ -237,7 +237,7 @@ class Plugins
         $prefix = $header->getClassesPrefix();
         $filePath = dirname($headerReflection->getFileName()) . (!empty($header->getSourceDirectory()) ? DS . $header->getSourceDirectory() : '');
         $pluginClass = $header->getPluginClass();
-        if (!is_null($prefix) && !is_null($filePath))
+        if (!is_null($prefix))
         {
             try {
                 Core::addAutoloadMap($prefix, $filePath);
@@ -255,7 +255,7 @@ class Plugins
 		}
 
 		// Attempt to load the plugin
-		if (!class_exists($pluginClass, true))
+		if (!class_exists($pluginClass))
 			throw new PluginException("Could not load plugin. Class does not exist", 1);
 
 		$this->plugins[$pluginName] = new $pluginClass($parameters);

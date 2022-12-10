@@ -64,7 +64,7 @@ class Libraries
      *
      * @var Factory
      */
-    protected $factory;
+    protected Factory $factory;
 
     /**
      * Libraries constructor.
@@ -80,9 +80,9 @@ class Libraries
      * Add a library to FuzeWorks by adding an object.
      *
      * @param string $libraryName
-     * @param object $libraryObject
+     * @param iLibrary $libraryObject
      */
-    public function addLibraryObject(string $libraryName, object $libraryObject)
+    public function addLibraryObject(string $libraryName, iLibrary $libraryObject): void
     {
         $this->libraryObjects[strtolower($libraryName)] = $libraryObject;
     }
@@ -94,9 +94,9 @@ class Libraries
      * @param string $libraryClass
      * @throws LibraryException
      */
-    public function addLibraryClass(string $libraryName, string $libraryClass)
+    public function addLibraryClass(string $libraryName, string $libraryClass): void
     {
-        if (!class_exists($libraryClass, true))
+        if (!class_exists($libraryClass))
             throw new LibraryException("Could not add library class. '" . $libraryClass . "' could not be loaded.", 1);
 
         $this->libraryClasses[strtolower($libraryName)] = $libraryClass;
@@ -114,10 +114,10 @@ class Libraries
      * @param string $libraryName
      * @param array $parameters
      * @param array $libraryPaths
-     * @return object
+     * @return iLibrary
      * @throws LibraryException
      */
-    public function get(string $libraryName, array $parameters = [], array $libraryPaths = [])
+    public function get(string $libraryName, array $parameters = [], array $libraryPaths = []): iLibrary
     {
         // Test for empty string
         if (empty($libraryName))
@@ -178,12 +178,12 @@ class Libraries
      * @param       string $libraryClass
      * @param       array $parameters
      * @throws      LibraryException
-     * @return      object
+     * @return      iLibrary
      */
-    protected function initLibrary(string $libraryName, string $libraryClass, array $parameters = [])
+    protected function initLibrary(string $libraryName, string $libraryClass, array $parameters = []): iLibrary
     {
         // First check to see if the library is already loaded
-        if (!class_exists($libraryClass, true))
+        if (!class_exists($libraryClass))
             throw new LibraryException("Could not initiate library. Class not found", 1);
 
         // Determine what parameters to use
@@ -191,7 +191,7 @@ class Libraries
         {
             try {
                 $parameters = $this->factory->config->getConfig(strtolower($libraryName))->toArray();
-            } catch (ConfigException $e) {
+            } catch (ConfigException) {
                 // No problem, just use an empty array instead
                 $parameters = array();
             }
@@ -210,9 +210,9 @@ class Libraries
             $headerReflection = new ReflectionClass(get_class($classObject));
             $filePath = dirname($headerReflection->getFileName()) . (!is_null($classObject->getSourceDirectory()) ? DS . $classObject->getSourceDirectory() : '' );
             $prefix = $classObject->getClassesPrefix();
-            if (!is_null($filePath) && !is_null($prefix))
+            if (!is_null($prefix))
                 Core::addAutoloadMap($prefix, $filePath);
-        } catch (CoreException $e) {
+        } catch (CoreException) {
             throw new LibraryException("Could not initiate library. Failed to add to autoloader.");
         }
 

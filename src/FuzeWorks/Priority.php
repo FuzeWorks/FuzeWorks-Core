@@ -64,28 +64,21 @@ abstract class Priority
     /**
      * Returns the string of the priority based on the integer.
      *
-     * @param $intPriorty
+     * @param int $priority
      *
      * @return bool|string A bool when the integer isn't a priority. If the integer is a priority, the name is returned
      */
-    public static function getPriority($intPriorty)
+    public static function getPriority(int $priority): bool|string
     {
-        switch ($intPriorty) {
-            case 5:
-                return 'Priority::LOWEST';
-            case 4:
-                return 'Priority::LOW';
-            case 3:
-                return 'Priority::NORMAL';
-            case 2:
-                return 'Priority::HIGH';
-            case 1:
-                return 'Priority::HIGHEST';
-            case 0:
-                return 'Priority::MONITOR';
-            default:
-                return false;
-        }
+        return match ($priority) {
+            5 => 'Priority::LOWEST',
+            4 => 'Priority::LOW',
+            3 => 'Priority::NORMAL',
+            2 => 'Priority::HIGH',
+            1 => 'Priority::HIGHEST',
+            0 => 'Priority::MONITOR',
+            default => false,
+        };
     }
 
     /**

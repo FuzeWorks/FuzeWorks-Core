@@ -58,7 +58,7 @@ class TestLoadHeaderNotIPluginHeaderHeader
         return '\FuzeWorks\UnitTest\Plugins\TestLoadHeaderNotIPluginHeader\TestLoadPlugin';
     }
 
-    public function init()
-	{
+    public function init(): void
+    {
 	}
 }

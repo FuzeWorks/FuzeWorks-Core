@@ -57,7 +57,7 @@ class DeferredComponentClass
     /**
      * @var mixed return from the invoked method
      */
-    protected $return;
+    protected mixed $return;
 
     /**
      * @var bool Whether the method has been invoked
@@ -82,7 +82,7 @@ class DeferredComponentClass
      *
      * @param $result
      */
-    public function invoke($result)
+    public function invoke($result): void
     {
         $this->return = $result;
         $this->invoked = true;
@@ -97,7 +97,7 @@ class DeferredComponentClass
 
     public function getResult()
     {
-        if ($this->invoked == true)
+        if ($this->invoked)
             return $this->return;
         else
             return false;

@@ -59,12 +59,11 @@ class Event
     /**
      * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
      */
-    public function setCancelled(bool $cancelled)
+    public function setCancelled(bool $cancelled): void
     {
-        if ($cancelled == true) {
+        if ($cancelled)
             $this->cancelled = true;
-        } else {
+        else
             $this->cancelled = false;
-        }
     }
 }

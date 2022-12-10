@@ -224,9 +224,9 @@ class Configurator
      *
      * @codeCoverageIgnore
      *
-     * @var string Name of the template file
+     * @var string $templateName of the template file
      */
-    public static function setLoggerTemplate($templateName)
+    public static function setLoggerTemplate(string $templateName): void
     {
         Logger::setLoggerTemplate($templateName);
     }
@@ -283,7 +283,7 @@ class Configurator
      * @return Configurator
      * @throws InvalidArgumentException
      */
-    public function setDebugAddress($address = 'NONE'): Configurator
+    public function setDebugAddress(string|array $address = 'NONE'): Configurator
     {
         // First we fetch the list
         if (!is_string($address) && !is_array($address))
@@ -348,7 +348,7 @@ class Configurator
         // Then load the framework
         $container = Core::init();
         Logger::newLevel("Creating container...");
-        if ($debug == true)
+        if ($debug)
         {
             define('ENVIRONMENT', 'DEVELOPMENT');
             Logger::enable();
@@ -358,7 +358,7 @@ class Configurator
 
 
         // Load components
-        foreach ($this->components as $componentSuperClass => $component)
+        foreach ($this->components as $component)
         {
             Logger::logInfo("Adding Component: '" . $component->getName() . "'");
             foreach ($component->getClasses() as $componentName => $componentClass)

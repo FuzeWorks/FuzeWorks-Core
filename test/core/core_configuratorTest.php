@@ -401,7 +401,7 @@ class configuratorTest extends CoreTestAbstract
         $this->assertTrue($this->configurator->isDebugMode());
 
         // Set a debug address, all in this case; also verify return type
-        $this->assertInstanceOf('FuzeWorks\Configurator', $this->configurator->setDebugAddress('NONE'));
+        $this->assertInstanceOf('FuzeWorks\Configurator', $this->configurator->setDebugAddress());
 
         // No match should be found. Verify that debug has been deactivated
         $this->assertFalse($this->configurator->isDebugMode());
@@ -470,16 +470,6 @@ class configuratorTest extends CoreTestAbstract
         // Unset
         unset($_COOKIE[Configurator::COOKIE_SECRET], $_SERVER['REMOTE_ADDR']);
     }
-
-    /**
-     * @depends testEnableDebugMode
-     * @covers ::setDebugAddress
-     */
-    public function testSetDebugAddressInvalidArgument()
-    {
-        $this->expectException(\FuzeWorks\Exception\InvalidArgumentException::class);
-        $this->configurator->setDebugAddress(null);
-    }
 }
 
 class MockComponent implements iComponent
@@ -492,6 +482,7 @@ class MockComponent implements iComponent
 
     public function getClasses(): array
     {
+        return [];
     }
 
     public function onAddComponent(Configurator $configurator): Configurator

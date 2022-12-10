@@ -174,10 +174,10 @@ class eventsTest extends CoreTestAbstract
         // First add the listener, expect it to be never called
         $listener = $this->getMockBuilder(Observer::class)->setMethods(['mockListener'])->getMock();
         $listener->expects($this->never())->method('mockListener');
-        Events::addListener(array($listener, 'mockListener'), 'mockEvent', Priority::NORMAL);
+        Events::addListener(array($listener, 'mockListener'), 'mockEvent');
 
         // Now try and remove it
-        Events::removeListener(array($listener, 'mockListener'), 'mockEvent', Priority::NORMAL);
+        Events::removeListener(array($listener, 'mockListener'), 'mockEvent');
 
         // And now fire the event
         Events::fireEvent('mockEvent');
@@ -219,7 +219,7 @@ class eventsTest extends CoreTestAbstract
      */
     public function testRemoveUnsetEventListener()
     {
-        $this->assertNull(Events::removeListener(function($event){}, 'emptyListenerArray', Priority::NORMAL));
+        $this->assertNull(Events::removeListener(function($event){}, 'emptyListenerArray'));
     }
 
     /**
@@ -229,7 +229,7 @@ class eventsTest extends CoreTestAbstract
     public function testRemoveUnsetListener()
     {
         Events::addListener(function($e) {}, 'mockEvent', Priority::NORMAL);
-        $this->assertNull(Events::removeListener(function() {echo "Called"; }, 'mockEvent', Priority::NORMAL));
+        $this->assertNull(Events::removeListener(function() {echo "Called"; }, 'mockEvent'));
     }
 
     /**
@@ -298,8 +298,8 @@ class eventsTest extends CoreTestAbstract
 
 class Observer
 {
-    public function mockMethod() {}
-    public function mockListener($event) {}
+    public function mockMethod(): void {}
+    public function mockListener($event): void {}
 }
 
 class MockEvent extends Event
