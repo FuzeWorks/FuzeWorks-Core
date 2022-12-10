@@ -2,23 +2,52 @@ kind: pipeline
 type: docker
 name: test
 
+services:
+  - name: cache
+    image: redis
+
 steps:
   - name: composer
     image: composer:latest
     commands:
       - composer install
 
-  - name: php81test
+  - name: PHP81CoreTest
     image: registry.i15.nl/i15/fuzephp:8.1-alpine
     commands:
       - docker-php-ext-enable xdebug
-      - vendor/bin/phpunit -c test/phpunit.xml
+      - vendor/bin/phpunit -c test/phpunit.xml --testsuite core
+
+  - name: PHP81DummyProviderTest
+    image: registry.i15.nl/i15/fuzephp:8.1-alpine
+    commands:
+      - docker-php-ext-enable xdebug
+      - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
+    environment:
+      OBJECTSTORAGE_PROVIDER: DummyProvider
+
+  - name: PHP81FileProviderTest
+    image: registry.i15.nl/i15/fuzephp:8.1-alpine
+    commands:
+      - docker-php-ext-enable xdebug
+      - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
+    environment:
+      OBJECTSTORAGE_PROVIDER: FileProvider
+
+  - name: PHP81RedisProviderTest
+    image: registry.i15.nl/i15/fuzephp:8.1-alpine
+    commands:
+      - docker-php-ext-enable xdebug
+      - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
+    environment:
+      OBJECTSTORAGE_PROVIDER: RedisProvider
+      OBJECTSTORAGE_REDIS_HOST: cache
 
   - name: coverage
     image: registry.i15.nl/i15/fuzephp:8.1-alpine
     commands:
       - docker-php-ext-enable xdebug
-      - vendor/bin/phpunit -c test/phpunit.xml --coverage-text
+      - vendor/bin/phpunit -c test/phpunit.xml --testsuite core --coverage-text
 
 image_pull_secrets:
   - dockerconfig

@@ -12,8 +12,12 @@
         </exclude>
     </coverage>
     <testsuites>
-        <testsuite name="Core Suite">
-            <directory>./</directory>
+        <testsuite name="core">
+            <directory>./core</directory>
+            <directory>./events</directory>
+        </testsuite>
+        <testsuite name="storage">
+            <directory>./storage</directory>
         </testsuite>
     </testsuites>
 </phpunit>

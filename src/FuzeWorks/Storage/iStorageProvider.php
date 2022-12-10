@@ -1,0 +1,52 @@
+<?php
+/**
+ * FuzeWorks ObjectStorage Component.
+ *
+ * The FuzeWorks PHP FrameWork
+ *
+ * Copyright (C) 2013-2020 i15
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * @author    i15
+ * @copyright Copyright (c) 2013 - 2020, i15. (https://i15.nl)
+ * @license   https://opensource.org/licenses/MIT MIT License
+ *
+ * @since Version 1.3.0
+ *
+ * @version Version 1.3.0
+ */
+
+namespace FuzeWorks\Storage;
+
+interface iStorageProvider
+{
+
+    public function init(array $providerConfig): bool;
+    public function getIndex(): array;
+    public function getItem(string $key);
+    public function getItemMeta(string $key): ?array;
+    public function getItems(array $keys = []): array;
+    public function hasItem(string $key): bool;
+    public function clear(): bool;
+    public function deleteItem(string $key): bool;
+    public function deleteItems(array $keys): bool;
+    public function save(string $key, $value, array $metaData = []): bool;
+
+}

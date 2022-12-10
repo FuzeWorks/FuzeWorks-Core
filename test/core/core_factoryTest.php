@@ -214,6 +214,7 @@ class factoryTest extends CoreTestAbstract
         $this->assertSame($factory->events, $factory2->events);
         $this->assertSame($factory->libraries, $factory2->libraries);
         $this->assertSame($factory->helpers, $factory2->helpers);
+        $this->assertSame($factory->storage, $factory2->storage);
 
         // And test when changing one classInstance
         $factory->newInstance('Helpers');

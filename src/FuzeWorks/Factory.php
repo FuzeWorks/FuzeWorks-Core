@@ -115,6 +115,13 @@ class Factory
 	public Plugins $plugins;
 
     /**
+     * Storage Object
+     *
+     * @var Storage
+     */
+    public Storage $storage;
+
+    /**
      * Factory instance constructor. Should only really be called once
      * @throws FactoryException
      */
@@ -131,6 +138,7 @@ class Factory
 	        $this->libraries = new Libraries();
 	        $this->helpers = new Helpers();
 	        $this->plugins = new Plugins();
+            $this->storage = new Storage();
 
 	        return;
 		}
