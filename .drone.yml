@@ -24,7 +24,7 @@ steps:
       - docker-php-ext-enable xdebug
       - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
     environment:
-      OBJECTSTORAGE_PROVIDER: DummyProvider
+      STORAGE_PROVIDER: DummyProvider
 
   - name: PHP81FileProviderTest
     image: registry.i15.nl/i15/fuzephp:8.1-alpine
@@ -32,7 +32,7 @@ steps:
       - docker-php-ext-enable xdebug
       - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
     environment:
-      OBJECTSTORAGE_PROVIDER: FileProvider
+      STORAGE_PROVIDER: FileProvider
 
   - name: PHP81RedisProviderTest
     image: registry.i15.nl/i15/fuzephp:8.1-alpine
@@ -40,8 +40,8 @@ steps:
       - docker-php-ext-enable xdebug
       - vendor/bin/phpunit -c test/phpunit.xml --testsuite storage
     environment:
-      OBJECTSTORAGE_PROVIDER: RedisProvider
-      OBJECTSTORAGE_REDIS_HOST: cache
+      STORAGE_PROVIDER: RedisProvider
+      STORAGE_REDIS_HOST: cache
 
   - name: coverage
     image: registry.i15.nl/i15/fuzephp:8.1-alpine
