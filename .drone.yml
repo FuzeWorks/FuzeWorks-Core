@@ -4,24 +4,22 @@ name: test
 
 steps:
   - name: composer
-    image: registry.i15.nl/i15/fuzephp:8.5-alpine
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     commands:
       - composer install
 
   - name: php85test
-    image: registry.i15.nl/i15/fuzephp:8.5-alpine
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     environment:
       XDEBUG_MODE: coverage
     commands:
-      - install-php-extensions xdebug
       - vendor/bin/phpunit -c test/phpunit.xml
 
   - name: coverage
-    image: registry.i15.nl/i15/fuzephp:8.5-alpine
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     environment:
       XDEBUG_MODE: coverage
     commands:
-      - install-php-extensions xdebug
       - vendor/bin/phpunit -c test/phpunit.xml --coverage-text
 
 image_pull_secrets:

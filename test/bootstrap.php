@@ -36,7 +36,7 @@
 
 use FuzeWorks\Core\Configurator;
 
-require_once(dirname(__DIR__, 3) . '/vendor/autoload.php');
+require_once(dirname(__DIR__, 1) . '/vendor/autoload.php');
 
 $configurator = new Configurator();
 
