@@ -34,7 +34,7 @@
  * @version Version 1.3.0
  */
 namespace Application\Plugin;
-use FuzeWorks\iPluginHeader;
+use FuzeWorks\Core\iPluginHeader;
 
 class TestGetPluginMethodHeader implements iPluginHeader
 {

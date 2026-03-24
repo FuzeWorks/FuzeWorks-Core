@@ -34,7 +34,7 @@
  * @version Version 1.2.0
  */
 namespace Application\Library;
-use FuzeWorks\iLibrary;
+use FuzeWorks\Core\iLibrary;
 
 class TestGetLibraryFromDirectory implements iLibrary {
 

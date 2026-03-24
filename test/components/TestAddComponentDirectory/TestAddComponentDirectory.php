@@ -34,10 +34,10 @@
  * @version Version 1.3.0
  */
 namespace FuzeWorks\Component;
-use FuzeWorks\ComponentPathsTrait;
-use FuzeWorks\Configurator;
-use FuzeWorks\Factory;
-use FuzeWorks\iComponent;
+use FuzeWorks\Core\ComponentPathsTrait;
+use FuzeWorks\Core\Configurator;
+use FuzeWorks\Core\Factory;
+use FuzeWorks\Core\iComponent;
 
 class TestAddComponentDirectoryComponent implements iComponent
 {

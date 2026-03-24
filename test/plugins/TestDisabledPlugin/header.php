@@ -34,7 +34,7 @@
  * @version Version 1.2.0
  */
 namespace Application\Plugin;
-use FuzeWorks\iPluginHeader;
+use FuzeWorks\Core\iPluginHeader;
 
 class TestDisabledPluginHeader implements iPluginHeader
 {

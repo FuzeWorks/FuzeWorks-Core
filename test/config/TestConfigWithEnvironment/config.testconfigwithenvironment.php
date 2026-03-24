@@ -34,7 +34,7 @@
  * @version Version 1.2.0
  */
 
-use FuzeWorks\Core;
+use FuzeWorks\Core\Core;
 
 return array(
     'testKey' => Core::getEnv('TESTKEY'),

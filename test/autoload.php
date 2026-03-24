@@ -34,7 +34,7 @@
  * @version Version 1.3.0
  */
 
-use FuzeWorks\Logger;
+use FuzeWorks\Core\Logger;
 
 // First set the working directory
 chdir(dirname(__DIR__));
@@ -44,7 +44,7 @@ $container = require('bootstrap.php');
 Logger::disableHandlers();
 
 // Load the test abstract
-require_once 'core/abstract.coreTestAbstract.php';
+require_once 'core/CoreTestAbstract.php';
 
 // Display all errors
 ini_set('display_errors', 1);

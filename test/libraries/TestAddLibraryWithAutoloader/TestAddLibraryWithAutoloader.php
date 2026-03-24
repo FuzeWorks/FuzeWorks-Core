@@ -35,7 +35,7 @@
  */
 
 namespace Application\Library;
-use FuzeWorks\iLibrary;
+use FuzeWorks\Core\iLibrary;
 
 class TestAddLibraryWithAutoloader implements iLibrary
 {

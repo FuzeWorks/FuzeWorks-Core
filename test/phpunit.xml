@@ -1,19 +1,15 @@
 <?xml version="1.0"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd" bootstrap="autoload.php" convertErrorsToExceptions="true" convertNoticesToExceptions="true" convertWarningsToExceptions="true" stopOnError="false" stopOnFailure="false" stopOnIncomplete="false" stopOnSkipped="false" colors="false">
-    <coverage processUncoveredFiles="false">
-        <include>
-            <directory suffix=".php">../</directory>
-        </include>
-        <exclude>
-            <directory suffix=".php">../vendor/</directory>
-            <directory suffix=".php">../test/</directory>
-            <directory suffix=".php">../src/Layout/</directory>
-            <directory suffix=".php">../src/Config/</directory>
-        </exclude>
-    </coverage>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.0/phpunit.xsd" bootstrap="autoload.php"  displayDetailsOnTestsThatTriggerWarnings="true" stopOnError="false" stopOnFailure="false" failOnDeprecation="true" failOnPhpunitDeprecation="true" failOnPhpunitNotice="true" stopOnIncomplete="false" stopOnSkipped="false" colors="true">
     <testsuites>
         <testsuite name="Core Suite">
             <directory>./</directory>
         </testsuite>
     </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">../src</directory>
+        </include>
+    </source>
+
+    <coverage includeUncoveredFiles="true" />
 </phpunit>

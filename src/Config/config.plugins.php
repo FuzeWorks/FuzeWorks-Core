@@ -37,6 +37,6 @@
 /**
  * Special settings for plugins. Allows the administrator to disable plugins. Can be edited manually or automatically. 
  */
-return array(
-	'disabled_plugins' => array(),
-);
+return [
+	"disabled_plugins" => []
+];

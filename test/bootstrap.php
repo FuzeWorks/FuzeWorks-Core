@@ -33,9 +33,12 @@
  *
  * @version Version 1.3.0
  */
-require_once(dirname(__DIR__) . '/vendor/autoload.php');
 
-$configurator = new FuzeWorks\Configurator();
+use FuzeWorks\Core\Configurator;
+
+require_once(dirname(__DIR__, 3) . '/vendor/autoload.php');
+
+$configurator = new Configurator();
 
 // Set directories
 $configurator->setTempDirectory(__DIR__ . '/temp');

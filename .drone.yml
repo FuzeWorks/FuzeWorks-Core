@@ -4,32 +4,24 @@ name: test
 
 steps:
   - name: composer
-    image: composer:latest
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine
     commands:
       - composer install
 
-  - name: php74test
-    image: registry.i15.nl/i15/fuzephp:7.4-alpine
+  - name: php85test
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine
+    environment:
+      XDEBUG_MODE: coverage
     commands:
-      - docker-php-ext-enable xdebug
-      - vendor/bin/phpunit -c test/phpunit.xml
-
-  - name: php80test
-    image: registry.i15.nl/i15/fuzephp:8.0-alpine
-    commands:
-      - docker-php-ext-enable xdebug
-      - vendor/bin/phpunit -c test/phpunit.xml
-
-  - name: php81test
-    image: registry.i15.nl/i15/fuzephp:8.1-alpine
-    commands:
-      - docker-php-ext-enable xdebug
+      - install-php-extensions xdebug
       - vendor/bin/phpunit -c test/phpunit.xml
 
   - name: coverage
-    image: registry.i15.nl/i15/fuzephp:8.0-alpine
+    image: registry.i15.nl/i15/fuzephp:8.5-alpine
+    environment:
+      XDEBUG_MODE: coverage
     commands:
-      - docker-php-ext-enable xdebug
+      - install-php-extensions xdebug
       - vendor/bin/phpunit -c test/phpunit.xml --coverage-text
 
 image_pull_secrets:
