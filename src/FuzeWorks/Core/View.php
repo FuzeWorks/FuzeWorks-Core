@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,79 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.3.3
  */
 
 namespace FuzeWorks\Core;
 
 /**
- * Class Event.
+ * Abstract class View.
  *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
+ * Extends all views to use useful classes
  *
- * @author    TechFuze <contact@techfuze.net>
+ * @author    Abel Hoogeveen <abel@techfuze.net>
  * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
  */
-class Event
+abstract class View
 {
-    private bool $cancelled = false;
 
     /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
+     * @var Controllers
      */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
+    protected Controllers $controllers;
 
     /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
+     * @var Views
      */
-    public function setCancelled(bool $cancelled)
+    protected Views $views;
+
+    /**
+     * @var Plugins
+     */
+    protected Plugins $plugins;
+
+    /**
+     * @var Libraries
+     */
+    protected Libraries $libraries;
+
+    /**
+     * @var Helpers
+     */
+    protected Helpers $helpers;
+
+    /**
+     * @var Config
+     */
+    protected Config $config;
+
+    /**
+     * The controller associated with this view
+     *
+     * @var Controller
+     */
+    protected Controller $controller;
+
+    /**
+     * Provide the View with its associated Controller
+     *
+     * @param Controller $controller
+     */
+    public function setController(Controller $controller)
     {
-        $this->cancelled = $cancelled;
+        $this->controller = $controller;
     }
+
+    public function __construct()
+    {
+        $this->controllers = Factory::getInstance()->controllers;
+        $this->views = Factory::getInstance()->views;
+        $this->plugins = Factory::getInstance()->plugins;
+        $this->libraries = Factory::getInstance()->libraries;
+        $this->helpers = Factory::getInstance()->helpers;
+        $this->config = Factory::getInstance()->config;
+    }
+
 }

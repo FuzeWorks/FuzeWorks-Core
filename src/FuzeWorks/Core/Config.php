@@ -138,8 +138,8 @@ class Config
     protected function loadConfigFile(string $configName, array $configPaths): ConfigORM
     {
         // Fire event to intercept the loading of a config file
-        /** @var ConfigGetEvent $event */
         try {
+            /** @var ConfigGetEvent $event */
             $event = Events::fireEvent('ConfigGetEvent', $configName, $configPaths);
             // @codeCoverageIgnoreStart
         } catch (EventException $e) {

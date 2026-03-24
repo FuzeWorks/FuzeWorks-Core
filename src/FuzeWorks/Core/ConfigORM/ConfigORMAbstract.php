@@ -166,16 +166,16 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function rewind()
+    public function rewind(): void
     {
-        return reset($this->cfg);
+        reset($this->cfg);
     }
 
     /**
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function current()
+    public function current(): mixed
     {
         return current($this->cfg);
     }
@@ -184,7 +184,7 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function key()
+    public function key(): mixed
     {
         return key($this->cfg);
     }
@@ -193,9 +193,9 @@ abstract class ConfigORMAbstract implements Iterator
      * Iterator method.
      * @codeCoverageIgnore
      */
-    public function next()
+    public function next(): void
     {
-        return next($this->cfg);
+        next($this->cfg);
     }
 
     /**

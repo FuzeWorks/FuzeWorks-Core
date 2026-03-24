@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,29 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.3.3
  */
-
-namespace FuzeWorks\Core;
 
 /**
- * Class Event.
+ * A route consists of two parts: a 'routeString' and 'routeConfig'. The routeString will be matched against the provided path.
  *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
+ * Possible values:
+ *	Default callable: Adds a route that changes the URL structure. Sends all matches to the defaultCallable router
+ * 	'routingString'
  *
- * @author    TechFuze <contact@techfuze.net>
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
+ * 	Custom callable: Adds a route that sends all matches to the provided callable. Allows user to replace defaultCallable
+ *	'routingString' => array('callable' => array(CALLABLE))
+ *
+ * 	Dynamic rewrite: Adds a route that rewrites a URL to a specific controller and method configuration, using a callable. The callable can dynamically determine which page to load.
+ * 	'routingString' => CALLABLE
+ *
+ * 	Static rewrite: Adds a route that rewrites and URL to a specific controller and method using a fixed route. This allows for pre-determined rewrites of pages.
+ * 	'routingString' => ['viewType' => 'someType', 'viewName' => 'someName', 'viewMethod' => 'someMethod', 'viewParameters' => 'someParameters']
+ *
+ * 	Example routingString: '/^(?P<viewName>.*?)(|\/(?P<viewMethod>.*?)(|\/(?P<viewParameters>.*?)))(|\.(?P<viewType>.*?))$/'
+ *  A routeString has to contain viewName, viewMethod, viewParameters and viewType in order to be processed by defaultCallable.
  */
-class Event
-{
-    private bool $cancelled = false;
 
-    /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
-     */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
-
-    /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
-     */
-    public function setCancelled(bool $cancelled)
-    {
-        $this->cancelled = $cancelled;
-    }
-}
+return [];

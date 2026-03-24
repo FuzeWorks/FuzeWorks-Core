@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks CLIComponent.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,24 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.3.3
  */
 
-namespace FuzeWorks\Core;
+namespace Application\View;
+use FuzeWorks\Core\View;
 
-/**
- * Class Event.
- *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
- *
- * @author    TechFuze <contact@techfuze.net>
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
- */
-class Event
+class TestDefaultCallableChangeMethodTestView extends View
 {
-    private bool $cancelled = false;
 
-    /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
-     */
-    public function isCancelled(): bool
+    public function index(): string
     {
-        return $this->cancelled;
+        return "Not altered!";
     }
 
-    /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
-     */
-    public function setCancelled(bool $cancelled)
+    public function altered(string $param1, string $param2): array
     {
-        $this->cancelled = $cancelled;
+        return ["Altered", $param1, $param2];
     }
 }

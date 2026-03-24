@@ -69,7 +69,7 @@ class DeferredComponentClass
      */
     protected $callback;
 
-    public function __construct(string $componentClass, string $method, array $arguments, callable $callback = null)
+    public function __construct(string $componentClass, string $method, array $arguments, ?callable $callback = null)
     {
         $this->componentClass = $componentClass;
         $this->method = $method;

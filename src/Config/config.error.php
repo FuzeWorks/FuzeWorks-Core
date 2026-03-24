@@ -34,10 +34,10 @@
  * @version Version 1.2.0
  */
 
-return array(
+return [
   'fuzeworks_error_reporting' => true,
   'php_error_reporting' => false,
   'log_errors_to_file' => true,
   'log_last_request_to_file' => false,
   'logger_template' => 'logger_cli',
-);
+];

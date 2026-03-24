@@ -184,10 +184,8 @@ class Core
         static $_is_php;
         $version = (string) $version;
 
-        if ( ! isset($_is_php[$version]))
-        {
+        if (!isset($_is_php[$version]))
             $_is_php[$version] = version_compare(PHP_VERSION, $version, '>=');
-        }
 
         return $_is_php[$version];
     }
@@ -354,9 +352,7 @@ class Core
     {
         // If we're on a Unix server with safe_mode off we call is_writable
         if (DIRECTORY_SEPARATOR === '/' && ! ini_get('safe_mode'))
-        {
             return is_writable($file);
-        }
 
         /* For Windows servers and safe_mode "on" installations we'll actually
          * write a file then read it. Bah...
@@ -375,9 +371,7 @@ class Core
             return TRUE;
         }
         elseif ( ! is_file($file) OR ($fp = @fopen($file, 'ab')) === FALSE)
-        {
             return FALSE;
-        }
 
         fclose($fp);
         return TRUE;

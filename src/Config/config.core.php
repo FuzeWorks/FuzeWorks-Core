@@ -34,6 +34,6 @@
  * @version Version 1.2.0
  */
 
-return array(
-  'enable_events' 			=> true
-);
+return [
+  'enable_events' => true
+];

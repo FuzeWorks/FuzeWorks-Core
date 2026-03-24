@@ -123,9 +123,7 @@ class Libraries
     {
         // Test for empty string
         if (empty($libraryName))
-        {
             throw new LibraryException("Could not load library. No name provided", 1);
-        }
 
         // Test if the library already exists
         $libraryNameLowerCase = strtolower($libraryName);

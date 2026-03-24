@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,62 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.3.3
  */
 
-namespace FuzeWorks\Core;
+namespace FuzeWorks\Core\Event;
+
+use FuzeWorks\Core\Event;
 
 /**
- * Class Event.
+ * Event that gets fired when a callable is to be loaded by the Router class
  *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
+ * Use this to cancel the modification the loading of a custom callable or the defaultCallable
  *
- * @author    TechFuze <contact@techfuze.net>
+ * Currently, only used by Router::loadCallable();
+ *
+ * @author    Abel Hoogeveen <abel@techfuze.net>
  * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
  */
-class Event
+class RouterLoadCallableEvent extends Event
 {
-    private bool $cancelled = false;
 
     /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
+     * The callable to be loaded
+     *
+     * @var callable
      */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
+    public $callable;
 
     /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
+     * The matches with which the callable is loaded
+     *
+     * @var array
      */
-    public function setCancelled(bool $cancelled)
+    public array $matches;
+
+    /**
+     * The static route configuration
+     *
+     * @var array
+     */
+    public array $routeData;
+
+    /**
+     * The route which resulted in this callable being loaded
+     *
+     * @var string
+     */
+    public string $route;
+
+    public function init(callable $callable, array $matches, array $routeData, string $route)
     {
-        $this->cancelled = $cancelled;
+        $this->callable = $callable;
+        $this->matches = $matches;
+        $this->routeData = $routeData;
+        $this->route = $route;
     }
+
 }

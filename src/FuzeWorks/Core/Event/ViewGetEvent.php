@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,73 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.3.3
  */
 
-namespace FuzeWorks\Core;
+namespace FuzeWorks\Core\Event;
+use FuzeWorks\Core\Event;
+use FuzeWorks\Core\Controller;
 
 /**
- * Class Event.
+ * Event that gets fired when a view is loaded.
  *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
+ * Use this to cancel the loading of a view, or change the view to be loaded
  *
- * @author    TechFuze <contact@techfuze.net>
+ * @author    Abel Hoogeveen <abel@techfuze.net>
  * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
  */
-class Event
+class ViewGetEvent extends Event
 {
-    private bool $cancelled = false;
+    /**
+     * The directories the view can get loaded from.
+     *
+     * @var array
+     */
+    public array $viewPaths = [];
 
     /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
+     * The name of the view to be loaded.
+     *
+     * @var string|null
      */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
+    public ?string $viewName = null;
 
     /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
+     * The type of view to be loaded. Eg: html, json, cli.
+     *
+     * @var string|null
      */
-    public function setCancelled(bool $cancelled)
+    public ?string $viewType = null;
+
+    /**
+     * The namespace of the View to be loaded. Defaults to Application\View
+     *
+     * @var string
+     */
+    public string $namespace = '\Application\View\\';
+
+    /**
+     * Arguments provided to the constructor
+     *
+     * @var array
+     */
+    public array $arguments = [];
+
+    /**
+     * @var Controller
+     */
+    public Controller $controller;
+
+    public function init($viewName, $viewType, $viewPaths, $namespace, $controller, $arguments)
     {
-        $this->cancelled = $cancelled;
+        $this->viewName = $viewName;
+        $this->viewType = $viewType;
+        $this->viewPaths = $viewPaths;
+        $this->namespace = $namespace;
+        $this->controller = $controller;
+        $this->arguments = $arguments;
     }
+
 }

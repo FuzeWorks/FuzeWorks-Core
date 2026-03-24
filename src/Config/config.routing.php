@@ -1,6 +1,6 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
@@ -29,38 +29,14 @@
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.2.0
  */
 
-namespace FuzeWorks\Core;
-
-/**
- * Class Event.
- *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
- *
- * @author    TechFuze <contact@techfuze.net>
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
- */
-class Event
-{
-    private bool $cancelled = false;
-
-    /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
-     */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
-
-    /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
-     */
-    public function setCancelled(bool $cancelled)
-    {
-        $this->cancelled = $cancelled;
-    }
-}
+return [
+    'default_view' => 'index',
+    'default_viewType' => 'standard',
+    'default_viewMethod' => 'index',
+    'default_namespacePrefix' => '\Application\\'
+];

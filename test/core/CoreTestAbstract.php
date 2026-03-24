@@ -66,5 +66,10 @@ abstract class CoreTestAbstract extends TestCase
 
         // Remove autoloader
         Core::clearAutoloader();
+
+        // Clear componentPaths
+        Factory::getInstance('controllers')->clearComponentPaths();
+        Factory::getInstance('models')->clearComponentPaths();
+        Factory::getInstance('views')->clearComponentPaths();
     }
 }

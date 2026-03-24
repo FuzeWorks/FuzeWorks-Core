@@ -1,28 +1,21 @@
-FuzeWorks - Readme [![pipeline status](http://git.i15.nl/fuzeworks/core/badges/development/pipeline.svg)](http://git.i15.nl/fuzeworks/core/commits/development) [![coverage report](http://git.i15.nl/fuzeworks/core/badges/development/coverage.svg)](http://git.i15.nl/fuzeworks/core/commits/development)
-===================
-
-Version 1.2.0
+Version 1.5.0
 
 A versatile PHP Framework built to perform.
 
-https://techfuze.net/fuzeworks
+https://i15.nl/fuzeworks
 
 Summary
 -------
 
 FuzeWorks is a flexible PHP Framework made for the requirements of today's web.
-For a summary of features, list of requirements, and installation instructions,
-please see the documentation in the ./doc/ folder or at http://techfuze.net/fuzeworks
 
 Copyright
 ---------
 
-Copyright © 2013 onwards -- TechFuze
+Copyright © 2013 onwards -- i15
 
 Certain libraries are copyrighted by their respective authors;
 see the full copyright list for details.
-
-For full copyright information, please see ./doc/copyright.html
 
 License
 -------
@@ -57,4 +50,4 @@ transitioning older code to the MIT License, but work is not yet complete.
 Enjoy!
 ------
 
-TechFuze
+i15

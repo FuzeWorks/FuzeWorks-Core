@@ -115,6 +115,30 @@ class Factory
 	public Plugins $plugins;
 
 	/**
+	 * Controllers Object
+	 * @var Controllers
+	 */
+	public Controllers $controllers;
+
+	/**
+	 * Models Object
+	 * @var Models
+	 */
+	public Models $models;
+
+	/**
+	 * Views Object
+	 * @var Views
+	 */
+	public Views $views;
+
+	/**
+	 * Router Object
+	 * @var Router
+	 */
+	public Router $router;
+
+	/**
 	 * Components holder
 	 */
 	protected array $components = [];
@@ -136,6 +160,10 @@ class Factory
 	        $this->libraries = new Libraries();
 	        $this->helpers = new Helpers();
 	        $this->plugins = new Plugins();
+			$this->controllers = new Controllers();
+			$this->models = new Models();
+			$this->views = new Views();
+			$this->router = new Router();
 
 	        return;
 		}
@@ -211,7 +239,7 @@ class Factory
         try {
             Events::fireEvent('CoreStartEvent');
         } catch (EventException $e) {
-            throw new CoreException("Could not initiate Factory. coreStartEvent threw exception: ".$e->getMessage());
+            throw new CoreException("Could not initiate Factory. CoreStartEvent threw exception: ".$e->getMessage());
         }
 
         return $this;

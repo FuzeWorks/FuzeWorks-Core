@@ -1,10 +1,10 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks Framework MVCR Component.
  *
  * The FuzeWorks PHP FrameWork
  *
- * Copyright (C) 2013-2019 TechFuze
+ * Copyright (C) 2013-2018 TechFuze
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,42 +25,20 @@
  * SOFTWARE.
  *
  * @author    TechFuze
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
+ * @copyright Copyright (c) 2013 - 2018, TechFuze. (http://techfuze.net)
  * @license   https://opensource.org/licenses/MIT MIT License
  *
  * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.2.0
  *
- * @version Version 1.3.0
+ * @version Version 1.2.0
  */
 
-namespace FuzeWorks\Core;
+namespace Application\Controller;
 
-/**
- * Class Event.
- *
- * A simple class for events. The only current purpose is to be able to cancel events, but it can be easily extended.
- *
- * @author    TechFuze <contact@techfuze.net>
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
- */
-class Event
+use FuzeWorks\Core\Controller;
+
+class TestDefaultCallableMissingViewController extends Controller
 {
-    private bool $cancelled = false;
 
-    /**
-     * @return bool True if the event is cancelled, false if the event is not cancelled
-     */
-    public function isCancelled(): bool
-    {
-        return $this->cancelled;
-    }
-
-    /**
-     * @param bool $cancelled True if the event is cancelled, false if the event is not cancelled
-     */
-    public function setCancelled(bool $cancelled)
-    {
-        $this->cancelled = $cancelled;
-    }
 }
