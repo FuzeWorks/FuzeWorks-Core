@@ -2,7 +2,12 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/13.0/phpunit.xsd" bootstrap="autoload.php"  displayDetailsOnTestsThatTriggerWarnings="true" stopOnError="false" stopOnFailure="false" failOnDeprecation="true" failOnPhpunitDeprecation="true" failOnPhpunitNotice="true" stopOnIncomplete="false" stopOnSkipped="false" colors="true">
     <testsuites>
         <testsuite name="Core Suite">
-            <directory>./</directory>
+            <directory>./core</directory>
+            <directory>./events</directory>
+            <directory>./mcr</directory>
+        </testsuite>
+        <testsuite name="Storage Suite">
+            <directory>./storage</directory>
         </testsuite>
     </testsuites>
     <source>

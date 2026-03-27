@@ -1,10 +1,10 @@
 <?php
 /**
- * FuzeWorks Framework Core.
+ * FuzeWorks ObjectStorage Component.
  *
  * The FuzeWorks PHP FrameWork
  *
- * Copyright (C) 2013-2019 TechFuze
+ * Copyright (C) 2013-2020 i15
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,40 +24,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * @author    TechFuze
- * @copyright Copyright (c) 2013 - 2019, TechFuze. (http://techfuze.net)
+ * @author    i15
+ * @copyright Copyright (c) 2013 - 2020, i15. (https://i15.nl)
  * @license   https://opensource.org/licenses/MIT MIT License
  *
- * @link  http://techfuze.net/fuzeworks
- * @since Version 0.0.1
+ * @since Version 1.3.0
  *
  * @version Version 1.3.0
  */
 
-use FuzeWorks\Core\Logger;
+namespace FuzeWorks\Core\Exception;
 
-// First set the working directory
-chdir(dirname(__DIR__));
-
-// Load the FuzeWorks container
-$container = require('bootstrap.php');
-Logger::disableHandlers();
-
-// Load the test abstract
-require_once 'core/CoreTestAbstract.php';
-require_once 'storage/StorageTestAbstract.php';
-require_once 'storage/CacheTestAbstract.php';
-
-// Display all errors
-ini_set('display_errors', 1);
-error_reporting(E_ALL | E_STRICT);
-
-// Set localhost "remote" IP
-isset($_SERVER['REMOTE_ADDR']) OR $_SERVER['REMOTE_ADDR'] = '127.0.0.1';
-
-// Alias vfsStream
-class_alias('org\bovigo\vfs\vfsStream', 'vfsStream');
-class_alias('org\bovigo\vfs\vfsStreamDirectory', 'vfsStreamDirectory');
-class_alias('org\bovigo\vfs\vfsStreamWrapper', 'vfsStreamWrapper');
-
-Logger::setLoggerTemplate('logger_cli');
+class StorageException extends CoreException
+{
+}

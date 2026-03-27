@@ -55,13 +55,13 @@ abstract class CoreTestAbstract extends TestCase
         // Clear all events created by tests
         Events::$listeners = [];
 
-        // Reset all config files
-        Factory::getInstance('config')->discardConfigFiles();
-
         // Re-enable events, in case they have been disabled
         Events::enable();
 
-        // Remove Config overrides
+        // Reset all config files
+        Factory::getInstance('config')->discardConfigFiles();
+
+        // Remove Config overrides and reset Config
         Config::$configOverrides = [];
 
         // Remove autoloader

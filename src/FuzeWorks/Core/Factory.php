@@ -139,6 +139,12 @@ class Factory
 	public Router $router;
 
 	/**
+	 *  Storage Object
+	 * @var Storage
+	 */
+	public Storage $storage;
+
+	/**
 	 * Components holder
 	 */
 	protected array $components = [];
@@ -164,6 +170,7 @@ class Factory
 			$this->models = new Models();
 			$this->views = new Views();
 			$this->router = new Router();
+			$this->storage = new Storage();
 
 	        return;
 		}
@@ -228,6 +235,9 @@ class Factory
             if (method_exists($component, 'init'))
                 $component->init();
         }
+
+		// Also init the router
+		$this->router->init();
 
         // Initialize all plugins
         $this->plugins->loadHeadersFromPluginPaths();

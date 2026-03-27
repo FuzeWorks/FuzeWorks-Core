@@ -2,6 +2,13 @@ kind: pipeline
 type: docker
 name: test
 
+environment:
+  STORAGE_REDIS_HOST: cache
+
+services:
+  - name: cache
+    image: redis
+
 steps:
   - name: composer
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
@@ -9,13 +16,6 @@ steps:
       - composer install
 
   - name: php85test
-    image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
-    environment:
-      XDEBUG_MODE: coverage
-    commands:
-      - vendor/bin/phpunit -c test/phpunit.xml
-
-  - name: coverage
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     environment:
       XDEBUG_MODE: coverage
