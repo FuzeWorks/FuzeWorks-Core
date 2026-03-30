@@ -139,10 +139,16 @@ class Factory
 	public Router $router;
 
 	/**
-	 *  Storage Object
+	 * Storage Object
 	 * @var Storage
 	 */
 	public Storage $storage;
+
+	/**
+	 * Database Object
+	 * @var Database
+	 */
+	public Database $databases;
 
 	/**
 	 * Components holder
@@ -171,6 +177,7 @@ class Factory
 			$this->views = new Views();
 			$this->router = new Router();
 			$this->storage = new Storage();
+			$this->databases = new Database();
 
 	        return;
 		}
@@ -236,8 +243,9 @@ class Factory
                 $component->init();
         }
 
-		// Also init the router
+		// Also init the router and database
 		$this->router->init();
+		$this->databases->init();
 
         // Initialize all plugins
         $this->plugins->loadHeadersFromPluginPaths();
