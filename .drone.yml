@@ -5,19 +5,25 @@ name: test
 environment:
   STORAGE_REDIS_HOST: cache
   PDO_DSN: "sqlite::memory:"
-  MONGO_HOST: "mongo"
+  MONGO_HOST: mongo
 
 services:
   - name: cache
     image: redis
   - name: mongo
-    image: mongo:latest
+    image: mongo:7
 
 steps:
   - name: composer
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     commands:
       - composer install
+
+  - name: mongo_wait
+    image: mongo:7
+    commands:
+      - echo "Waiting for MongoDB to be ready..."
+      - until mongo --host mongo --eval "print(\"MongoDB is ready\")"; do sleep 1; done
 
   - name: php85test
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
