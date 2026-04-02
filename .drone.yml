@@ -12,6 +12,8 @@ services:
     image: redis
   - name: mongo
     image: cyberpython/mongo-no-avx:7.3.4
+    command:
+      - --bind_ip_all
 
 steps:
   - name: composer
