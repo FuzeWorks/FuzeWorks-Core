@@ -131,6 +131,10 @@ class Database
      */
     public function get(string $connectionName = 'default', string $engineName = '', array $parameters = []): iDatabaseEngine
     {
+        // Prepare event parameters
+        $engineName = !empty($engineName) ? $engineName : $this->dbConfig['connections'][$connectionName]['engineName'] ?? '';
+        $parameters = !empty($parameters) ? $parameters : $this->dbConfig['connections'][$connectionName] ?? [];
+
         // Fire the event to allow settings to be changed
         try {
             /** @var DatabaseLoadDriverEvent $event */
@@ -143,6 +147,10 @@ class Database
         if ($event->isCancelled())
             throw new DatabaseException("Could not get database. Cancelled by DatabaseLoadDriverEvent.");
 
+        // If the event is not cancelled, but the connection name got changed but the paraemeters are empty, try to fetch the parameters for the new connection name
+        if ($event->connectionName !== $connectionName && empty($event->parameters) && isset($this->dbConfig['connections'][$event->connectionName]))
+            $event->parameters = $this->dbConfig['connections'][$event->connectionName];
+
         // If a databaseEngine is provided by the event, use that. Otherwise search in the list of engines
         if ($event->databaseEngine instanceof iDatabaseEngine)
         {
@@ -152,32 +160,26 @@ class Database
             if (!$engine->isSetup())
                 $engine->setUp($event->parameters);
         }
-        elseif (isset($this->connections[$event->connectionName]))
+        
+        // If the connection already exists, use that
+        if (isset($this->connections[$event->connectionName]))
         {
-            // Do already exists second
             /** @var iDatabaseEngine $engine */
             $engine = $this->connections[$event->connectionName];
         }
-        elseif (!empty($event->engineName) && !empty($event->parameters))
-        {
-            // Do provided config third
-            /** @var iDatabaseEngine $engine */
-            $engineClass = get_class($this->fetchEngine($event->engineName));
-            $engine = $this->connections[$event->connectionName] = new $engineClass();
-            $engine->setUp($event->parameters);
-        }
-        else
-        {
-            // Do external config fourth
-            if (!isset($this->dbConfig['connections'][$event->connectionName]))
-                throw new DatabaseException("Could not get database. Database not found in config.");
 
-            /** @var iDatabaseEngine $engine */
-            $engineName = $this->dbConfig['connections'][$event->connectionName]['engineName'];
-            $engineClass = get_class($this->fetchEngine($engineName));
-            $engine = $this->connections[$event->connectionName] = new $engineClass();
-            $engine->setUp($this->dbConfig['connections'][$event->connectionName]);
-        }
+        // If the connection does not exist, but the engine name is provided, try to initialize it with the provided parameters
+        if (!isset($this->dbConfig['connections'][$event->connectionName]))
+            throw new DatabaseException("Could not get database. Database not found in config.");
+
+        /** @var iDatabaseEngine $engine */
+        $engineClass = get_class($this->fetchEngine($event->engineName));
+        $engine = $this->connections[$event->connectionName] = new $engineClass();
+        $engine->setUp($event->parameters);
+
+        // If the engine is still not setup, try to initialize it with the provided parameters
+        if (!$engine->isSetup() && !empty($event->parameters))
+            $engine->setUp($event->parameters);
 
         // Tie it into the Tracy Bar if available
         if (class_exists('\Tracy\Debugger', true))

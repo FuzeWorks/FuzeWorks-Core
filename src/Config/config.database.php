@@ -34,21 +34,37 @@
  * @version Version 1.2.0
  */
 
+use FuzeWorks\Core\Core;
+
 return [
-    'active_group' => 'default',
+    'active_group' => 'pdo',
     'connections' => [
-        'default' => [
+        'pdo' => [
             'engineName' =>     'pdo',
-            'dsn' =>            '',
-            'hostname' =>       '',
-            'username' =>       '',
-            'password' =>       '',
-            'database' =>       '',
-            'prefix' =>         '',
+            'dsn' =>            Core::getEnv(
+                "PDO_DSN", 
+                "mysql:host" . Core::getEnv("PDO_HOST", "localhost").
+                ";dbname=" . Core::getEnv("PDO_NAME", "").
+                ";charset=" . Core::getEnv("PDO_CHARSET", "utf8")),
+            'hostname' =>       Core::getEnv("PDO_HOST", "localhost"),
+            'username' =>       Core::getEnv("PDO_USER", ""),
+            'password' =>       Core::getEnv("PDO_PASS", ""),
+            'database' =>       Core::getEnv("PDO_NAME", ""),
+            'prefix' =>         Core::getEnv("PDO_PREFIX", ""),
             'persistent' =>     false,
             'debug' =>          false,
-            'charset' =>        'utf8',
-            'collation' =>      'utf8_general_ci'
+            'charset' =>        Core::getEnv("PDO_CHARSET", "utf8"),
+            'collation' =>      Core::getEnv("PDO_COLLATION", "utf8_general_ci")
+        ],
+        "mongodb" => [
+            'engineName' =>     'mongo',
+            'uri' =>            Core::getEnv(
+                "MONGO_DSN", 
+                "mongodb://" . Core::getEnv("MONGO_HOST", "localhost") . ":" . Core::getEnv("MONGO_PORT", "27017")),
+            'username' =>       Core::getEnv("MONGO_USER", null),
+            'password' =>       Core::getEnv("MONGO_PASS", null),
+            'uriOptions' => [],
+            'driverOptions' => [],
         ]
     ]
 ];

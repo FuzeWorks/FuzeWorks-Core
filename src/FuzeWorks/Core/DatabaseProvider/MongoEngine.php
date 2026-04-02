@@ -79,7 +79,7 @@ class MongoEngine extends DatabaseDriver
     /**
      * @var Client
      */
-    protected $mongoConnection;
+    protected ?Client $mongoConnection = null;
 
     /**
      * Connection string with the database
@@ -100,7 +100,7 @@ class MongoEngine extends DatabaseDriver
 
     public function getConnectionDescription(): string
     {
-        if (is_null($this->mongoConnection))
+        if ($this->mongoConnection === null)
             return 'none';
 
         return $this->uri;
@@ -174,6 +174,8 @@ class MongoEngine extends DatabaseDriver
     public function tearDown(): bool
     {
         // MongoDB does not require any action. Always return true
+        $this->mongoConnection = null;
+        $this->setUp = false;
         return true;
     }
 
@@ -205,7 +207,7 @@ class MongoEngine extends DatabaseDriver
      */
     public function transactionStart(): bool
     {
-        // TODO: Implement transactionStart() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -213,7 +215,7 @@ class MongoEngine extends DatabaseDriver
      */
     public function transactionEnd(): bool
     {
-        // TODO: Implement transactionEnd() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -221,7 +223,7 @@ class MongoEngine extends DatabaseDriver
      */
     public function transactionCommit(): bool
     {
-        // TODO: Implement transactionCommit() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -229,6 +231,6 @@ class MongoEngine extends DatabaseDriver
      */
     public function transactionRollback(): bool
     {
-        // TODO: Implement transactionRollback() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 }

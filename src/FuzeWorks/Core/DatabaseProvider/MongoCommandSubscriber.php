@@ -43,7 +43,6 @@ use MongoDB\Driver\Monitoring\CommandSucceededEvent;
 
 class MongoCommandSubscriber implements CommandSubscriber
 {
-
     /**
      * @var MongoEngine
      */
@@ -73,7 +72,7 @@ class MongoCommandSubscriber implements CommandSubscriber
      * @throws \InvalidArgumentException on argument parsing errors.
      * @since 1.3.0
      */
-    public function commandFailed($event)
+    public function commandFailed($event): void
     {
         // TODO: Implement commandFailed() method.
     }
@@ -87,7 +86,7 @@ class MongoCommandSubscriber implements CommandSubscriber
      * @throws \InvalidArgumentException on argument parsing errors.
      * @since 1.3.0
      */
-    public function commandStarted($event)
+    public function commandStarted($event): void
     {
         $this->commandTimings = microtime(true);
         $this->queryString = strtoupper($event->getCommandName());
@@ -170,7 +169,7 @@ class MongoCommandSubscriber implements CommandSubscriber
      * @throws \InvalidArgumentException on argument parsing errors.
      * @since 1.3.0
      */
-    public function commandSucceeded($event)
+    public function commandSucceeded($event): void
     {
         // Get variables
         $queryTimings = microtime(true) - $this->commandTimings;

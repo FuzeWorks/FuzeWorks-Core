@@ -9,6 +9,9 @@
         <testsuite name="Storage Suite">
             <directory>./storage</directory>
         </testsuite>
+        <testsuite name="Database Suite">
+            <directory>./database</directory>
+        </testsuite>
     </testsuites>
     <source>
         <include>

@@ -39,7 +39,7 @@ use FuzeWorks\Core\Database;
 use FuzeWorks\Core\iDatabaseEngine;
 use FuzeWorks\Core\iDatabaseTableModel;
 use FuzeWorks\Core\DatabaseProvider\MongoEngine;
-use FuzeWorks\Database\Exception\DatabaseException;
+use FuzeWorks\Core\Exception\DatabaseException;
 use MongoDB\Collection;
 
 class MongoTableModel implements iDatabaseTableModel
