@@ -19,11 +19,11 @@ steps:
     commands:
       - composer install
 
-  - name: mongo_wait
+  - name: dependency_wait
     image: mongo:7
     commands:
       - echo "Waiting for MongoDB to be ready..."
-      - until mongo --host mongo --eval "print(\"MongoDB is ready\")"; do sleep 1; done
+      - until mongosh --host mongo --eval "print(\"MongoDB is ready\")"; do sleep 1; done
 
   - name: php85test
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
