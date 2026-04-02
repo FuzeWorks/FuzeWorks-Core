@@ -19,17 +19,12 @@ steps:
     commands:
       - composer install
 
-  - name: dependency_wait
-    image: cyberpython/mongo-no-avx:7.3.4
-    commands:
-      - echo "Waiting for MongoDB to be ready..."
-      - until mongosh --host mongo --eval "print(\"MongoDB is ready\")"; do sleep 1; done
-
   - name: php85test
     image: registry.i15.nl/i15/fuzephp:8.5-alpine-dev
     environment:
       XDEBUG_MODE: coverage
     commands:
+      - sleep 5 # Wait for services to be ready
       - vendor/bin/phpunit -c test/phpunit.xml --coverage-text
 
 image_pull_secrets:
