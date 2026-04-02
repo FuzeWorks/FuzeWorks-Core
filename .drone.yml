@@ -11,7 +11,7 @@ services:
   - name: cache
     image: redis
   - name: mongo
-    image: mongo:4
+    image: cyberpython/mongo-no-avx:7.3.4
 
 steps:
   - name: composer
@@ -20,7 +20,7 @@ steps:
       - composer install
 
   - name: dependency_wait
-    image: mongo:4
+    image: cyberpython/mongo-no-avx:7.3.4
     commands:
       - echo "Waiting for MongoDB to be ready..."
       - until mongosh --host mongo --eval "print(\"MongoDB is ready\")"; do sleep 1; done
