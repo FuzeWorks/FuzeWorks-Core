@@ -176,6 +176,7 @@ class MongoEngine extends DatabaseDriver
         // MongoDB does not require any action. Always return true
         $this->mongoConnection = null;
         $this->setUp = false;
+        $this->queries = [];
         return true;
     }
 

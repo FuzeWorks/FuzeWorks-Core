@@ -167,6 +167,7 @@ class PDOEngine extends DatabaseDriver
         // And close the connection
         $this->pdoConnection = null;
         $this->setUp = false;
+        $this->queries = [];
         return true;
     }
 

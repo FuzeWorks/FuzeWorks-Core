@@ -166,9 +166,15 @@ class Database
         {
             /** @var iDatabaseEngine $engine */
             $engine = $this->connections[$event->connectionName];
+
+            // If the engine is not setup, try to initialize it with the provided parameters
+            if (!$engine->isSetup() && !empty($event->parameters))
+                $engine->setUp($event->parameters);
+
+            return $engine;
         }
 
-        // If the connection does not exist, but the engine name is provided, try to initialize it with the provided parameters
+        // If the connection does not exist, but the engine name is provided, throw an exception
         if (!isset($this->dbConfig['connections'][$event->connectionName]))
             throw new DatabaseException("Could not get database. Database not found in config.");
 
@@ -176,10 +182,6 @@ class Database
         $engineClass = get_class($this->fetchEngine($event->engineName));
         $engine = $this->connections[$event->connectionName] = new $engineClass();
         $engine->setUp($event->parameters);
-
-        // If the engine is still not setup, try to initialize it with the provided parameters
-        if (!$engine->isSetup() && !empty($event->parameters))
-            $engine->setUp($event->parameters);
 
         // Tie it into the Tracy Bar if available
         if (class_exists('\Tracy\Debugger', true))
@@ -198,6 +200,10 @@ class Database
      */
     public function getTableModel(string $tableName, string $connectionName = 'default', string $engineName = '', array $parameters = []): iDatabaseTableModel
     {
+        // Prepare event parameters
+        $engineName = !empty($engineName) ? $engineName : $this->dbConfig['connections'][$connectionName]['engineName'] ?? '';
+        $parameters = !empty($parameters) ? $parameters : $this->dbConfig['connections'][$connectionName] ?? [];
+
         try {
             /** @var DatabaseLoadTableModelEvent $event */
             $event = Events::fireEvent(new DatabaseLoadTableModelEvent(), strtolower($engineName), $parameters, $connectionName, $tableName);
@@ -209,6 +215,10 @@ class Database
         if ($event->isCancelled())
             throw new DatabaseException("Could not get TableModel. Cancelled by databaseLoadTableModelEvent.");
 
+        // If the event is not cancelled, but the connection name got changed but the paraemeters are empty, try to fetch the parameters for the new connection name
+        if ($event->connectionName !== $connectionName && empty($event->parameters) && isset($this->dbConfig['connections'][$event->connectionName]))
+            $event->parameters = $this->dbConfig['connections'][$event->connectionName];
+
         // If a TableModel is provided by the event, use that. Otherwise search in the list of tableModels
         if (is_object($event->tableModel) && $event->tableModel instanceof iDatabaseTableModel)
         {
@@ -217,24 +227,30 @@ class Database
             if (!$tableModel->isSetup())
                 $tableModel->setUp($this->get($event->connectionName, $tableModel->getEngineName(), $event->parameters), $event->tableName);
         }
+
         // If the connection already exists, use that
-        elseif (isset($this->tables[$event->connectionName . "|" . $event->tableName]))
+        if (isset($this->tables[$event->connectionName . "|" . $event->tableName]))
         {
             /** @var iDatabaseTableModel $tableModel */
             $tableModel = $this->tables[$event->connectionName . "|" . $event->tableName];
-        }
-        // Otherwise use the provided configuration
-        else
-        {
-            // First the engine shall be fetched, so the name of the tableModel is known
-            $engine = $this->get($event->connectionName, $event->engineName, $event->parameters);
-            $tableModelClass = get_class($this->fetchTableModel($engine->getName()));
 
-            // Load the tableModel and add the engine
-            /** @var iDatabaseTableModel $tableModel */
-            $tableModel = $this->tables[$event->connectionName . "|" . $event->tableName] = new $tableModelClass();
-            $tableModel->setUp($engine, $event->tableName);
+            // If the tableModel setup, return it
+            if ($tableModel->isSetup())
+                return $tableModel;
         }
+
+        // If the connection does not exist, but the engine name is provided, throw an exception
+        if (!isset($this->dbConfig['connections'][$event->connectionName]))
+            throw new DatabaseException("Could not get database. Database not found in config.");
+
+        /** @var iDatabaseEngine $engine */
+        $engine = $this->get($event->connectionName, $event->engineName, $event->parameters);
+        $tableModelClass = get_class($this->fetchTableModel($engine->getName()));
+
+        // Load the tableModel and add the engine
+        /** @var iDatabaseTableModel $tableModel */
+        $tableModel = $this->tables[$event->connectionName . "|" . $event->tableName] = new $tableModelClass();
+        $tableModel->setUp($engine, $event->tableName);
 
         // And return the tableModel
         return $tableModel;

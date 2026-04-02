@@ -4,10 +4,14 @@ name: test
 
 environment:
   STORAGE_REDIS_HOST: cache
+  PDO_DSN: "sqlite::memory:"
+  MONGO_HOST: "mongo"
 
 services:
   - name: cache
     image: redis
+  - name: mongo
+    image: mongo:latest
 
 steps:
   - name: composer

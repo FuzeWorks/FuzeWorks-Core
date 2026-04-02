@@ -50,7 +50,7 @@ abstract class DatabaseDriver implements iDatabaseEngine
      *
      * @var array
      */
-    private $queries = [];
+    protected $queries = [];
 
     /**
      * Log information about a query. Used for debugging issues

@@ -243,7 +243,7 @@ class MongoTableModel implements iDatabaseTableModel
      */
     public function transactionStart(): bool
     {
-        // TODO: Implement transactionStart() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -251,7 +251,7 @@ class MongoTableModel implements iDatabaseTableModel
      */
     public function transactionEnd(): bool
     {
-        // TODO: Implement transactionEnd() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -259,7 +259,7 @@ class MongoTableModel implements iDatabaseTableModel
      */
     public function transactionCommit(): bool
     {
-        // TODO: Implement transactionCommit() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
@@ -267,7 +267,7 @@ class MongoTableModel implements iDatabaseTableModel
      */
     public function transactionRollback(): bool
     {
-        // TODO: Implement transactionRollback() method.
+        return false; // MongoDB transactions are not implemented in this engine
     }
 
     /**
